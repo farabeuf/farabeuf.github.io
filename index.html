@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+.gallery {
+  position: relative;
+  z-index: 2;
+  padding: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  transition: all .5s ease-in-out;
+  transform: translateZ(0);
+}
+
+.gallery figure {
+  flex-basis: 33.333%;
+  padding: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery img {
+  width: 100%;
+  transition: all .3s ease-in-out;
+}
+
+.gallery figcaption {
+  display: none;
+}
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +38,22 @@
     <p>Esta es una página web sencilla creada con GitHub Pages.</p>
 
 
-<iframe height="300" style="width: 100%;" scrolling="no" title="DailyUI #016 - Popup / Overlay" src="https://codepen.io/supah/embed/preview/ZWGJeR?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-</iframe>
+<div class="gallery">
+  <figure>
+    <img src="https://images.unsplash.com/photo-1448814100339-234df1d4005d?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=600" alt="" />
+    <figcaption>Daytona Beach <small>United States</small></figcaption>
+  </figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1443890923422-7819ed4101c0?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=600" alt="" />
+    <figcaption>Териберка, gorod Severomorsk <small>Russia</small></figcaption>
+  </figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=600" alt="" />
+    <figcaption>Bad Pyrmont <small>Deutschland</small></figcaption>
+  </figure>
+  <!-- Puedes añadir más figuras similares aquí -->
+</div>
+
 
 </body>
 
