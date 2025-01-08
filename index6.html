@@ -1,14 +1,10 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-    <title>Tu Nombre - Fotografía</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tu Nombre - Fotografía</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <style>
         /* Estilos CSS aquí */
         body {
     font-family: Arial, sans-serif;
@@ -77,33 +73,26 @@ nav ul li a {
     display: block;
 }
     </style>
-</head>
-<body>
+    </head>
     <header>
         <div class="logo-container">
             <img src="logo.png" alt="Logo" class="logo">
-            <h1>Tu Nombre</h1>
+            <h1>Farabeuf Foto</h1>
         </div>
         <nav>
             <ul>
-                <li class="dropdown">
-                    <a href="#">Galería</a>
-                    <div class="dropdown-content">
-                        <a href="street-art.html">Street Art</a>
-                        <a href="nature.html">Naturaleza</a>
-                        <a href="people.html">Personas</a>
-                        <a href="street-art.html">menu2</a>
-                        <a href="nature.html">menu3</a>
-                        <a href="people.html">menu4</a>
-                    </div>
-                </li>
-                <li><a href="about.html">Sobre Mí</a></li>
-                <li><a href="https://www.instagram.com/tu_usuario" target="_blank">Instagram</a></li>
+                <li class="dropdown"><a href="#">Galería</a>
+<div class="dropdown-content">
+                    <a href="street-art.html">Street Art</a>
+                    <a href="nature.html">Naturaleza</a>
+                    <a href="people.html">Personas</a>
+                    <a href="street-art.html">menu2</a>
+                    <a href="nature.html">menu3</a>
+                    <a href="people.html">menu4</a>
+                </div></li><li><a href="about.html">Sobre Mí</a></li><li><a href="https://www.instagram.com/tu_usuario" target="_blank">Instagram</a></li>
             </ul>
         </nav>
     </header>
-
-
     <title>Galería de Imágenes con Popup</title>
     <style>
         * {
@@ -158,38 +147,34 @@ nav ul li a {
             object-fit: contain;
         }
     </style>
-</head>
-<body>
-    <div class="gallery">
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/20151025_165146_22739738790_o.jpg" alt="Imagen de Google Drive" onclick="openPopup(this.src)">
+    <body>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/20151025_165146_22739738790_o.jpg" alt="Imagen de Google Drive" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/20151025_165818_22712375582_o.jpg" alt="Imagen 2" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/dsc05324_27801115554_o.jpg" alt="Imagen 3" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/dsc06360_28417509395_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/DSC058631.JPG" alt="Imagen 4" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/IMG_3361.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
+            </div>
+            <div class="gallery-item">
+                <img src="https://farabeuf.github.io/img/img_3566_48139161087_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
+            </div>
         </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/20151025_165818_22712375582_o.jpg" alt="Imagen 2" onclick="openPopup(this.src)">
+        <div id="popup" class="popup" onclick="closePopup()">
+            <img id="popupImg" src alt="Imagen ampliada">
         </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/dsc05324_27801115554_o.jpg" alt="Imagen 3" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/dsc06360_28417509395_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/DSC058631.JPG" alt="Imagen 4" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/IMG_3361.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/img_3566_48139161087_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
-        </div>
-        
-    </div>
-
-    <div id="popup" class="popup" onclick="closePopup()">
-        <img id="popupImg" src="" alt="Imagen ampliada">
-    </div>
-
-    <script>
+        <script>
         function openPopup(src) {
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popupImg');
@@ -202,5 +187,5 @@ nav ul li a {
             popup.style.display = 'none';
         }
     </script>
-</body>
+    </body>
 </html>
