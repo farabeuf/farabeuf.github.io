@@ -5,122 +5,52 @@
     <title>Tu Nombre - Fotografía</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        /* Estilos CSS previos */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+        /* Estilos previos... */
+
+        /* Estilos para el menú desplegable */
+        .dropdown {
+            position: relative;
+            display: inline-block;
         }
 
-        header {
-            background-color: white;
-            color: #333;
-            padding: 1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            width: 100px;
-            height: 50px;
-            margin-right: 10px;
-        }
-
-        /* Nuevo estilo para el menú responsivo */
-        .menu {
-            background-color: #f8f9fa;
-            overflow: hidden;
-        }
-        .menu a {
-            float: left;
-            display: block;
-            color: #202124;
-            text-align: center;
-            padding: 14px 16px;
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
             text-decoration: none;
+            display: block;
         }
-        .menu .icon {
-            display: none;
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
+
+        /* Ajustes para responsive */
         @media screen and (max-width: 600px) {
-            .menu a:not(:first-child) {display: none;}
-            .menu a.icon {
-                float: right;
+            .dropdown-content {
+                position: static;
+                display: none;
+                width: 100%;
+                background-color: #f8f9fa;
+            }
+
+            .menu.responsive .dropdown-content {
                 display: block;
             }
-        }
-        @media screen and (max-width: 600px) {
-            .menu.responsive {position: relative;}
-            .menu.responsive .icon {
-                position: absolute;
-                right: 0;
-                top: 0;
+
+            .menu.responsive .dropdown-content a {
+                padding-left: 30px;
             }
-            .menu.responsive a {
-                float: none;
-                display: block;
-                text-align: left;
-            }
-        }
-
-        /* Estilos adicionales */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            padding: 20px;
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .gallery-item {
-            flex: 1 0 200px;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .popup img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
         }
     </style>
 </head>
@@ -132,12 +62,20 @@
         </div>
         <div class="menu" id="myMenu">
             <a href="#inicio">Inicio</a>
-            <a href="#galeria">Galería</a>
+            <div class="dropdown">
+                <a href="#galeria">Galería</a>
+                <div class="dropdown-content">
+                    <a href="street-art.html">Street Art</a>
+                    <a href="nature.html">Naturaleza</a>
+                    <a href="people.html">Personas</a>
+                    <a href="street-art.html">menu2</a>
+                    <a href="nature.html">menu3</a>
+                    <a href="people.html">menu4</a>
+                </div>
+            </div>
             <a href="about.html">Sobre Mí</a>
             <a href="https://www.instagram.com/tu_usuario" target="_blank">Instagram</a>
-            <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
-                ☰
-            </a>
+            <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
         </div>
     </header>
 
@@ -152,7 +90,6 @@
                 x.className = "menu";
             }
         }
-
     </script>
     <body>
         <div class="gallery">
