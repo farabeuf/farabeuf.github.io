@@ -1,210 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería con Lightbox</title>
+    <title>Sobre Mí - Farabeuf Foto</title>
+    <link rel="icon" href="img/web/fbf.ico" type="image/x-icon">
     <style>
-        * {
-  box-sizing: border-box;
-}
-body {
-  margin: 5px;
-  position: relative;
-}
-$size: 6;
-#gallery {
-  display: grid;
-  height: calc(100vh - 10px);
-  grid-template: repeat($size, 1fr) / repeat($size, 1fr);
-  grid-gap: 0.5em;
-  @media (max-width: 800px) {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: center;
-    & > div {
-      width: 48%;
-      margin: 1%;
-      @media (max-width: 350px) {
-        width: 98%;
-      }
-    }
-  }
-  & > div {
-    //Grid Structure
-    &:nth-child(#{$size}n + 1) {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    &:nth-child(2) {
-      grid-column: span 3;
-      grid-row: span 3;
-    }
-    &:nth-child(4) {
-      grid-column: span 1;
-      grid-row: span 2;
-    }
-    & > a {
-      opacity: 0;
-      position: absolute;
-      color: #000;
-      background-color: #000;
-      font: bold 4em "Helvetica";
-      $shadow: 5px #fff;
-      text-shadow: 0 -1px $shadow, -1px 0px $shadow, 0 1px $shadow,
-        1px 0px $shadow;
-      padding: 2rem;
-      mix-blend-mode: difference;
-      width: 100%;
-      height: 100%;
-      transition: all ease 1s;
-    }
-    & > img {
-      width: 100%;
-      min-height: 100%;
-      transition: all ease 1s;
-    }
-    &:hover {
-      img {
-        filter: blur(4px);
-      }
-      a {
-        opacity: 1;
-      }
-    }
-  }
-  & > div {
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 2px 8px 0 rgba(#000, 0.2), 0 3px 20px 0 rgba(#000, 0.19);
-  }
-  div,
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-  }
-}
-//
-// lightbox
-//
-[id^="lightbox-"] {
-  &:target {
-    opacity:1;
-    pointer-events:inherit;
-    img{
-      filter:blur(0);
-    }
-  }
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(black, 0.5);
-  display: flex;
-  opacity:0;
-  transition: opacity 450ms ease-in-out;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  .content {
-    max-width: 90%;
-    position: relative;
-    color: #fff;
-    &:hover > a.close {
-      opacity: 1;
-      transform: scale(1, 1);
-    }
-    &:hover > .title {
-      opacity: 1;
-      transform: translateY(-3px); //Fix extra line at end
-      &::after{
-        opacity:1;
-      }
-    }
-    & > * {
-      transition: all 450ms ease-in-out;
-    }
-  }
-  .title {
-    display: block;
-    margin: 0;
-    padding: 1em;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    transform: translateY(50%);
-    font-size:1.5em;
-    opacity:0;
-    &::after{
-      content: ' ';
-      background-color: rgba(black, 0.4);
-      bottom:0;
-      left:0;
-      height:100%;
-      width:100%;
-      position:absolute;
-      transition: all 350ms ease-in-out 250ms;
-      opacity:0;
-      transform-origin:bottom;
-      mix-blend-mode: soft-light;
-    }
-  }
-  img {
-    max-height: 90vh;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    filter: blur(50px);
-  }
-  a.close {
-    width: 2em;
-    height: 2em;
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: rgba(black, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: scale(0, 0);
-    opacity: 0;
-    transform-origin: right top;
-    text-decoration:none;
-    color:#fff;
-    &::after {
-      content: "X";
-    }
-  }
-}
-
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: white;
+            color: #333;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 54px;
+            height: 54px;
+            margin-right: 10px;
+        }
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+        .menu a, .dropdown > a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .menu .icon {
+            display: none;
+        }
+        @media screen and (max-width: 1024px) {
+            .menu a:not(:first-child), .dropdown {display: none;}
+            .menu a.icon {
+                float: right;
+                display: block;
+            }
+            .menu.responsive {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .menu.responsive a.icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .menu.responsive a, .menu.responsive .dropdown {
+                display: block;
+                text-align: left;
+            }
+            .menu.responsive .dropdown-content {
+                position: relative;
+            }
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 100%;
+            padding: 20px;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .about-text {
+            flex: 2;
+            padding: 20px;
+        }
+        .language-selector {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+            }
+            .about-image, .about-text {
+                flex: 1 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="gallery">
-        <script>
-            - var max = 18
-- var imgstr = 511
-div#gallery
-  - for(var n=1; n<=max; n++)
-    div
-      img(src= 'https://picsum.photos/600/600/?image='+(imgstr + n))
-      a(href='#lightbox-'+n)= (imgstr + n)
-
-- for(var n=1; n<=max;n++)
-  div.lightbox(id="lightbox-"+n)
-    div.content
-      img(src='https://picsum.photos/1920/1080/?image='+(imgstr+n))
-      .title No. <b>#{imgstr+n}</b> from Picsum
-      a.close(href='#gallery')
- 
-
-
-  
-        </script>
+    <header>
+        <div class="logo-container">
+            <img src="img/web/display2.jpg" alt="Logo" class="logo">
+            <p><strong>Farabeuf Foto</strong></p>
+        </div>
+        <nav class="menu" id="myMenu">
+            <a href="index.html">Inicio</a>
+            <div class="dropdown">
+                <a href="#">Galería</a>
+                <div class="dropdown-content">
+                    <a href="street-art.html">Street Art</a>
+                    <a href="landscapes.html">Landscapes</a>
+                    <a href="streetfoto.html">Street photography</a>
+                    <a href="portraits.html">Portraits</a>
+                    <a href="concerts.html">Concerts</a>
+                    <a href="nature.html">Nature</a>
+                </div>
+            </div>
+            <a href="about.html">Sobre Mí</a>
+            <a href="https://www.instagram.com/alfonso_arroyo_samano" target="_blank">Instagram</a>
+            <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="language-selector">
+            <label for="language">Idioma / Language / Sprache:</label>
+            <select id="language" onchange="changeLanguage()">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>
+        <div class="about-section">
+            <div class="about-image">
+                <img src="img/web/yo.jpg" alt="Farabeuf">
+            </div>
+            <div class="about-text">
+                <div id="es">
+                    <h2>Sobre Mí</h2>
+                    <p>Para mí, la fotografía es más que una imagen: significa capturar un momento: una emoción genuina y sin filtros, una historia...</p>
+                    <!-- Resto del contenido en español -->
+                </div>
+                <div id="en" style="display: none;">
+                    <h2>About Me</h2>
+                    <p>For me, photography is more than just an image – it means capturing a moment: a genuine, unfiltered emotion, a story...</p>
+                    <!-- Resto del contenido en inglés -->
+                </div>
+                <div id="de" style="display: none;">
+                    <h2>Über Mich</h2>
+                    <p>Für mich ist Fotografie mehr als nur ein Bild – es bedeutet, einen Augenblick einzufangen: eine echte, unverfälschte Emotion...</p>
+                    <!-- Resto del contenido en alemán -->
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        function toggleMenu() {
+            var x = document.getElementById("myMenu");
+            if (x.className === "menu") {
+                x.className += " responsive";
+            } else {
+                x.className = "menu";
+            }
+        }
+
+        function changeLanguage() {
+            var lang = document.getElementById("language").value;
+            document.getElementById("es").style.display = lang === "es" ? "block" : "none";
+            document.getElementById("en").style.display = lang === "en" ? "block" : "none";
+            document.getElementById("de").style.display = lang === "de" ? "block" : "none";
+        }
+    </script>
 </body>
 </html>
