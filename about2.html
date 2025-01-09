@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Mí - Farabeuf Foto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        .about-text {
+            flex: 2;
+            padding: 20px;
+        }
+        .language-selector {
+            margin: 20px 0;
+            text-align: right;
+        }
+        .language-selector select {
+            padding: 5px;
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+            }
+            .about-image, .about-text {
+                flex: 1;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Sobre Mí - Farabeuf Foto</h1>
+            <div class="language-selector">
+                <label for="language">Idioma:</label>
+                <select id="language" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+            <div class="about-section">
+                <div class="about-image">
+                    <img src="img/web/yo.jpg" alt="Sobre Mí">
+                </div>
+                <div class="about-text" id="about-text">
+                    <!-- Contenido en español -->
+                    <p>Para mí, la fotografía es más que una imagen...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        const content = {
+            es: `
+                <p>Para mí, la fotografía es más que una imagen...</p>
+            `,
+            en: `
+                <p>For me, photography is more than just an image...</p>
+            `,
+            de: `
+                <p>Für mich ist Fotografie mehr als nur ein Bild...</p>
+            `
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('language').value;
+            document.getElementById('about-text').innerHTML = content[lang];
+        }
+    </script>
+</body>
+</html>
