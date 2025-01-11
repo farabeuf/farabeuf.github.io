@@ -213,7 +213,7 @@
 
             for (let i = 1; i <= totalImages; i++) {
                 const paddedNumber = i.toString().padStart(2, '0');
-                const imagePath = `${basePath}img_l_${paddedNumber}.jpg`;
+                const imagePath = `${basePath}img_${paddedNumber}.jpg`;
                 
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
