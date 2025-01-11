@@ -142,6 +142,26 @@
             max-height: 90%;
             object-fit: contain;
         }
+
+        .popup button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 16px;
+            font-size: 18px;
+        }
+
+        #prevBtn {
+            left: 10px;
+        }
+
+        #nextBtn {
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +169,7 @@
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
-        <nav class="menu" id="myMenu">
+          <nav class="menu" id="myMenu">
             <a href="index.html">Inicio</a>
             <div class="dropdown">
                 <a href="#">Galería</a>
@@ -175,15 +195,27 @@
         <div class="gallery-item">
             <img src="https://farabeuf.github.io/img/20151025_165818_22712375582_o.jpg" alt="Imagen 2" onclick="openPopup(this.src)">
         </div>
-        <div class="gallery-item"> </div>
-        <div class="gallery-item"> </div>
-        <div class="gallery-item"> </div>
-        <div class="gallery-item"> </div>
-        <div class="gallery-item"> </div>
+        <div class="gallery-item">
+            <img src="https://farabeuf.github.io/img/dsc05324_27801115554_o.jpg" alt="Imagen 3" onclick="openPopup(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="https://farabeuf.github.io/img/dsc06360_28417509395_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="https://farabeuf.github.io/img/DSC058631.JPG" alt="Imagen 5" onclick="openPopup(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="https://farabeuf.github.io/img/IMG_3361.jpg" alt="Imagen 6" onclick="openPopup(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="https://farabeuf.github.io/img/img_3566_48139161087_o.jpg" alt="Imagen 7" onclick="openPopup(this.src)">
+        </div>
     </div>
 
     <div id="popup" class="popup" onclick="closePopup()">
         <img id="popupImg" src="" alt="Imagen ampliada">
+        <button id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
+        <button id="nextBtn" onclick="changeImage(1)">&#10095;</button>
     </div>
 
     <script>
@@ -196,17 +228,50 @@
             }
         }
 
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.gallery-item img');
+
         function openPopup(src) {
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popupImg');
             popup.style.display = 'flex';
             popupImg.src = src;
+            currentIndex = Array.from(images).findIndex(img => img.src === src);
         }
 
         function closePopup() {
             const popup = document.getElementById('popup');
             popup.style.display = 'none';
         }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = images[currentIndex].src;
+        }
+
+        // Evitar que el clic en la imagen cierre el popup
+        document.getElementById('popupImg').onclick = function(event) {
+            event.stopPropagation();
+        };
+
+        // Evitar que el clic en los botones cierre el popup
+        document.getElementById('prevBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(-1);
+        };
+
+        document.getElementById('nextBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(1);
+        };
     </script>
+	<script type="text/javascript">
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+</script>
 </body>
 </html>
