@@ -174,12 +174,13 @@
             <div class="dropdown">
                 <a href="#">Galería</a>
                 <div class="dropdown-content">
-                    <a href="street-art.html">Street Art</a>
+                    <a href="urban.html">Urban and Architecture</a>
+                    <a href="events.html">Events</a>
                     <a href="landscapes.html">Landscapes</a>
-                    <a href="streetfoto.html">Street photography</a>
-                    <a href="portraits.html">Portraits</a>
-                    <a href="concerts.html">concerts</a>
                     <a href="nature.html">Nature</a>
+                    <a href="streetfoto.html">Street Photography</a>
+                    <a href="street-art.html">Street Art</a>
+					<a href="misc.html">Misc</a>
                 </div>
             </div>
             <a href="about.html">Sobre Mí</a>
@@ -188,29 +189,7 @@
         </nav>
     </header>
 
-    <div class="gallery">
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/20151025_165146_22739738790_o.jpg" alt="Imagen de Google Drive" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/20151025_165818_22712375582_o.jpg" alt="Imagen 2" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/dsc05324_27801115554_o.jpg" alt="Imagen 3" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/dsc06360_28417509395_o.jpg" alt="Imagen 4" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/DSC058631.JPG" alt="Imagen 5" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/IMG_3361.jpg" alt="Imagen 6" onclick="openPopup(this.src)">
-        </div>
-        <div class="gallery-item">
-            <img src="https://farabeuf.github.io/img/img_3566_48139161087_o.jpg" alt="Imagen 7" onclick="openPopup(this.src)">
-        </div>
-    </div>
+    <div id="gallery-container" class="gallery"></div>
 
     <div id="popup" class="popup" onclick="closePopup()">
         <img id="popupImg" src="" alt="Imagen ampliada">
@@ -228,14 +207,40 @@
             }
         }
 
+        function createGallery() {
+            const galleryContainer = document.getElementById('gallery-container');
+            // Ubicación de las imagenes
+			const basePath = 'img/nature/';
+			// Numero de imagines a mostrar en la galería
+            const totalImages = 101;
+
+            for (let i = 1; i <= totalImages; i++) {
+                const paddedNumber = i.toString().padStart(2, '0');
+				// Nombre de la imagen
+                const imagePath = `${basePath}img_nature_${paddedNumber}.jpg`;
+                
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = `Imagen ${i}`;
+                img.onclick = function() { openPopup(this.src); };
+                
+                galleryItem.appendChild(img);
+                galleryContainer.appendChild(galleryItem);
+            }
+        }
+
         let currentIndex = 0;
-        const images = document.querySelectorAll('.gallery-item img');
+        let images;
 
         function openPopup(src) {
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popupImg');
             popup.style.display = 'flex';
             popupImg.src = src;
+            images = document.querySelectorAll('.gallery-item img');
             currentIndex = Array.from(images).findIndex(img => img.src === src);
         }
 
@@ -251,6 +256,10 @@
             const popupImg = document.getElementById('popupImg');
             popupImg.src = images[currentIndex].src;
         }
+
+        window.onload = function() {
+            createGallery();
+        };
 
         // Evitar que el clic en la imagen cierre el popup
         document.getElementById('popupImg').onclick = function(event) {
@@ -268,10 +277,10 @@
             changeImage(1);
         };
     </script>
-	<script type="text/javascript">
+    <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     });
-</script>
+    </script>
 </body>
 </html>
