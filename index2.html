@@ -208,8 +208,10 @@
 
         function createGallery() {
             const galleryContainer = document.getElementById('gallery-container');
-            const basePath = 'img/Landschaft/';
-            const totalImages = 20;
+            // Ubicación de las imagenes
+			const basePath = 'img/Landschaft/';
+			// Numero de imagines a mostrar en la galería
+            const totalImages = 5;
 
             for (let i = 1; i <= totalImages; i++) {
                 const paddedNumber = i.toString().padStart(2, '0');
