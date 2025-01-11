@@ -142,6 +142,26 @@
             max-height: 90%;
             object-fit: contain;
         }
+
+        .popup button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 16px;
+            font-size: 18px;
+        }
+
+        #prevBtn {
+            left: 10px;
+        }
+
+        #nextBtn {
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -194,6 +214,8 @@
 
     <div id="popup" class="popup" onclick="closePopup()">
         <img id="popupImg" src="" alt="Imagen ampliada">
+        <button id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
+        <button id="nextBtn" onclick="changeImage(1)">&#10095;</button>
     </div>
 
     <script>
@@ -206,17 +228,45 @@
             }
         }
 
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.gallery-item img');
+
         function openPopup(src) {
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popupImg');
             popup.style.display = 'flex';
             popupImg.src = src;
+            currentIndex = Array.from(images).findIndex(img => img.src === src);
         }
 
         function closePopup() {
             const popup = document.getElementById('popup');
             popup.style.display = 'none';
         }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = images[currentIndex].src;
+        }
+
+        // Evitar que el clic en la imagen cierre el popup
+        document.getElementById('popupImg').onclick = function(event) {
+            event.stopPropagation();
+        };
+
+        // Evitar que el clic en los botones cierre el popup
+        document.getElementById('prevBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(-1);
+        };
+
+        document.getElementById('nextBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(1);
+        };
     </script>
 </body>
 </html>
