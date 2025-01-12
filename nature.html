@@ -479,7 +479,7 @@
             const totalImages = 101;
 
             for (let i = 1; i <= totalImages; i++) {
-                const paddedNumber = i.toString().padStart(2, '0');
+                const paddedNumber = i.toString().padStart(3, '0');
 				// Nombre de la imagen
                 const imagePath = `${basePath}img_nature_${paddedNumber}.jpg`;
                 
@@ -526,25 +526,25 @@
         };
 
         // Evitar que el clic en la imagen cierre el popup
-        document.getElementById('popupImg').onclick = function(event) {
-            event.stopPropagation();
-        };
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
 
-        // Evitar que el clic en los botones cierre el popup
-        document.getElementById('prevBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(-1);
-        };
+// Evitar que el clic en los botones cierre el popup
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
 
-        document.getElementById('nextBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(1);
-        };
-    </script>
-    <script type="text/javascript">
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
+
+// Prevenir el menú contextual
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
     </script>
 </body>
 </html>
