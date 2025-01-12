@@ -208,14 +208,16 @@
         }
 
         function createGallery() {
-            const galleryContainer = document.getElementById('gallery-container');
-            // Ubicación de las imagenes
-			const basePath = 'img/nature/';
-			// Numero de imagines a mostrar en la galería
-            const totalImages = 101;
+            	const galleryContainer = document.getElementById('gallery-container');
+            	// Ubicación de las imagenes
+				const basePath = 'img/nature/';
+				// Numero de imagines a mostrar en la galería
+            	const totalImages = 101;
 
-            for (let i = 1; i <= totalImages; i++) {
-                const paddedNumber = i.toString().padStart(3, '0');
+            	for (let i = 1; i <= totalImages; i++) {
+        		// Formatea los números con ceros iniciales (ej. 001, 010, 099)
+        		const paddedNumber = i.toString().padStart(3, '0'); // Siempre usa 3 dígitos
+				
 				// Nombre de la imagen
                 const imagePath = `${basePath}img_nature_${paddedNumber}.jpg`;
                 
