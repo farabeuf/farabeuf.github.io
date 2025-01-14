@@ -11,8 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
-			margin-top: 80px; /* Ajusta este valor según la altura del header para evitar que el contenido quede oculto detrás del menú */
-			padding-bottom: 20px; /* Asegura que el footer no quede oculto */
+			padding-top: 80px; /* Ajusta el espacio superior para que el contenido no quede cubierto por el menú fijo */
         }
 
         header {
@@ -23,10 +22,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-			position: fixed; /* Fija el header */
-   			width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
-  			top: 0; /* Fija al tope de la pantalla */
-   			z-index: 1000; /* Asegura que esté por encima de otros elementos */
+			
+			position: fixed; /* Fijar el menú en la parte superior */
+    		top: 0;
+    		left: 0;
+    		width: 100%;
+    		z-index: 10; /* Asegura que el menú esté por encima del contenido */
         }
 
         .logo-container {
@@ -169,44 +170,30 @@
             right: 10px;
         }
 		
-		
-		.footer-container {
-			background-color: white;
-			padding: 1em;
-			text-align: center;
-			box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-			width: 100%;
-			z-index: 1000;
-		}
-
-		.footer-container a {
+		footer a {
 			color: #333;
 			text-decoration: none;
-			margin: 0 10px;
+			padding: 10px 15px;
+			display: inline-block;
+			margin: 5px;
 		}
 
-		.footer-container a:hover {
-			text-decoration: underline;
-		}
-		
-		html, body {
-			height: 100%;
-			margin: 0;
+		footer a:hover {
+			background-color: #f1f1f1;
 		}
 
-footer {
-    margin-top: 20px; /* Ajusta según sea necesario */
+		#gallery-container {
+    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
 }
-
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto2</strong></p></div>
           <nav class="menu" id="myMenu">
-            <a href="index.html">Home</a>
+            <a href="index.html">Home2</a>
             <div class="dropdown">
                 <a href="#">Gallery</a>
                 <div class="dropdown-content">
@@ -318,9 +305,7 @@ footer {
     });
     </script>
 		<footer>
-    <div class="footer-container">
-        <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
-    </div>
+    <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
 </body>
 </html>
