@@ -12,6 +12,7 @@
             padding: 0;
             background-color: #f0f0f0;
 			margin-top: 80px; /* Ajusta este valor según la altura del header para evitar que el contenido quede oculto detrás del menú */
+			padding-bottom: 20px; /* Asegura que el footer no quede oculto */
         }
 
         header {
@@ -167,24 +168,34 @@
         #nextBtn {
             right: 10px;
         }
+		
+		
 		.footer-container {
-    background-color: white;
-    padding: 1em;
-    text-align: center;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
-}
+			background-color: white;
+			padding: 1em;
+			text-align: center;
+			box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+			width: 100%;
+			z-index: 1000;
+		}
 
-.footer-container a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 10px;
-}
+		.footer-container a {
+			color: #333;
+			text-decoration: none;
+			margin: 0 10px;
+		}
 
-.footer-container a:hover {
-    text-decoration: underline;
+		.footer-container a:hover {
+			text-decoration: underline;
+		}
+		
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+
+footer {
+    margin-top: 20px; /* Ajusta según sea necesario */
 }
 
     </style>
