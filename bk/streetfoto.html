@@ -41,38 +41,16 @@
         }
 
         .menu {
-    display: flex;
-    align-items: center;
-    margin-right: 15px; /* Añadir margen a la derecha del menú */
-}
+            display: flex;
+            align-items: center;
+        }
 
-.menu a, .dropdown > a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-}
-
-.menu a:last-child {
-    margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
-}
-
-footer {
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: inline-block;
-    margin: 5px;
-}
-
-footer a:hover {
-    background-color: #f1f1f1;
-}
+        .menu a, .dropdown > a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
 
         .dropdown {
             position: relative;
@@ -241,14 +219,14 @@ footer a:hover {
         function createGallery() {
             const galleryContainer = document.getElementById('gallery-container');
             // Ubicación de las imagenes
-			const basePath = 'img/streetart/';
+			const basePath = 'img/streetfoto/';
 			// Numero de imagines a mostrar en la galería
-            const totalImages = 59;
+            const totalImages = 170;
 
             for (let i = 1; i <= totalImages; i++) {
-                const paddedNumber = i.toString().padStart(2, '0');
+                const paddedNumber = i.toString().padStart(3, '0'); // Siempre usa 3 dígitos
 				// Nombre de la imagen
-                const imagePath = `${basePath}img_streetart_${paddedNumber}.jpg`;
+                const imagePath = `${basePath}img_streetfoto_${paddedNumber}.jpg`;
                 
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
