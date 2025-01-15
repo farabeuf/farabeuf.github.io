@@ -14,10 +14,10 @@
             background-color: #f4f4f4;
         }
         .container {
-            width: 95%;
+            width: 80%;
             margin: auto;
             overflow: hidden;
-            padding: 10px;
+            padding: 20px;
         }
         .about-section {
             display: flex;
@@ -46,7 +46,7 @@
         .language-selector {
             margin-bottom: 20px;
         }
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .about-section {
                 flex-direction: column;
             }
@@ -83,7 +83,6 @@
             display: flex;
     align-items: center;
     margin-right: 15px; /* Añadir margen a la derecha del menú */
-					flex-direction: column;
         }
 
         .menu a, .dropdown > a {
@@ -94,8 +93,6 @@
 }
 		.menu a:last-child {
     margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
-			padding: 8px;
-        text-align: center;
 }
 		footer {
     padding: 20px 0;
@@ -217,34 +214,13 @@ footer a:hover {
                   <p><strong>Betroffenenrechte</strong>:<br>
                     Sie haben das Recht, Auskunft über die bei uns gespeicherten personenbezogenen Daten zu erhalten sowie das Recht auf Berichtigung, Löschung und Einschränkung der Verarbeitung. Für Fragen zum Datenschutz können Sie uns unter der oben angegebenen E-Mail-Adresse kontaktieren.</p>
           </div>
-                <div id="en" style="display:none;">
-                    <h2>About Me</h2>
-                    <p>For me, photography is more than just an image – it means capturing a moment: a genuine, unfiltered emotion, a story. It is a captured landscape, a quiet sunset, a spontaneous smile, or the expression of a person who fascinates me. I don't like staged or artificial images. My photography is based on authenticity and composition that arises in the moment of capture.</p>
-                    <p>For me, post-processing means adjusting contrasts and colors to emphasize the atmosphere and feeling of the moment – not to change it.</p>
-                    <p>I am not only looking for beauty but for authenticity and the magic in everyday moments.</p>
-                    <p>I love photographing on the street, observing people, and capturing the incredible diversity of faces, shapes, textures, and patterns, with the freedom to document genuine, spontaneous moments from unusual perspectives.</p>
-                    <p><strong>My subjects</strong>: Landscapes, travel, portraits, street art, street photography, concerts, animals, and people.</p>
-                </div>
-                <div id="de" style="display:none;">
-                    <h2>Über Mich</h2>
-                    <p>Für mich ist Fotografie mehr als nur ein Bild – es bedeutet, einen Augenblick einzufangen: eine echte, unverfälschte Emotion, eine Geschichte. Es ist eine eingefangene Landschaft, ein stiller Sonnenuntergang, ein spontanes Lächeln oder der Ausdruck einer Person, die mich fasziniert. Ich mag keine gestellten oder künstlichen Bilder. Meine Fotografie basiert auf Authentizität und auf der Komposition, die bereits im Moment der Aufnahme entsteht.</p>
-                    <p>Bildbearbeitung bedeutet für mich, Kontraste und Farben anzupassen, um die Atmosphäre und das Gefühl des Moments zu unterstreichen – nicht, um ihn zu verändern.</p>
-                    <p>Ich suche nicht nur nach Schönheit, sondern nach Authentizität und der Magie in alltäglichen Momenten.</p>
-                    <p>Ich liebe es, auf der Straße zu fotografieren, Menschen zu beobachten und die unglaubliche Vielfalt an Gesichtern, Formen, Texturen und Mustern festzuhalten, mit der Freiheit, echte, spontane Momente aus ungewöhnlichen Blickwinkeln zu dokumentieren.</p>
-                    <p><strong>Meine Motive</strong>: Landschaften, Reisen, Porträts, Streetart, Streetfotografie, Konzerte, Tiere und Menschen.</p>
-                </div>
+                
 			  </div>
         </div>
     </div>
 
     <script>
-        function changeLanguage() {
-            var language = document.getElementById("language").value;
-            document.getElementById("es").style.display = "none";
-            document.getElementById("en").style.display = "none";
-            document.getElementById("de").style.display = "none";
-            document.getElementById(language).style.display = "block";
-        }
+        
 
         function toggleMenu() {
             var x = document.getElementById("myMenu");
