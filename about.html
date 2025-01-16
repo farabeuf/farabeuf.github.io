@@ -99,11 +99,13 @@
 
 footer {
     background-color: #f4f4f4;
-    padding: 20px;
+    padding: 20px 0;
     text-align: center;
+	overflow: hidden; /* Evita desbordamientos */
     position: relative;
     bottom: 0;
     width: 100%;
+	box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 footer a {
