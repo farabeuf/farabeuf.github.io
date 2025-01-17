@@ -190,17 +190,37 @@ footer a:hover {
     background-color: #f1f1f1;
 }
 		#gallery-container {
-    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
+    margin-top: 10px; /* Asegura que la galería no quede bajo el menú fijo */
 }
+		
+		.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto3</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
           <nav class="menu" id="myMenu">
-            <a href="index.html">Home3</a>
+            <a href="index.html">Home</a>
             <div class="dropdown">
                 <a href="#">Gallery</a>
                 <div class="dropdown-content">
@@ -237,29 +257,33 @@ footer a:hover {
             }
         }
 
-        function createGallery() {
-            const galleryContainer = document.getElementById('gallery-container');
-            // Ubicación de las imagenes
-			const basePath = 'img/chidas/';
-			// Numero de imagines a mostrar en la galería
-            const totalImages = 33;
+        function createGallery(page = 1) {
+    const galleryContainer = document.getElementById('gallery-container');
+    const basePath = 'img/streetfoto/';
+    const imagesPerPage = 15;
+    const startIndex = (page - 1) * imagesPerPage + 1;
+    const endIndex = startIndex + imagesPerPage - 1;
 
-            for (let i = 1; i <= totalImages; i++) {
-                const paddedNumber = i.toString().padStart(2, '0');
-                const imagePath = `${basePath}img_chidas_${paddedNumber}.jpg`;
-                
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                
-                const img = document.createElement('img');
-                img.src = imagePath;
-                img.alt = `Imagen ${i}`;
-                img.onclick = function() { openPopup(this.src); };
-                
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-            }
-        }
+    galleryContainer.innerHTML = ''; // Limpiar galería existente
+
+    for (let i = startIndex; i <= endIndex; i++) {
+        const paddedNumber = i.toString().padStart(3, '0');
+        const imagePath = `${basePath}img_nature_${paddedNumber}.jpg`;
+        
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = `Imagen ${i}`;
+        img.onerror = function() { this.style.display = 'none'; }; // Ocultar imágenes no existentes
+        img.onclick = function() { openPopup(this.src); };
+        
+        galleryItem.appendChild(img);
+        galleryContainer.appendChild(galleryItem);
+    }
+}
+
 
         let currentIndex = 0;
         let images;
@@ -287,8 +311,11 @@ footer a:hover {
         }
 
         window.onload = function() {
-            createGallery();
-        };
+    const totalImages = 170; // Ajusta este número al total real de imágenes
+    createGallery(1);
+    createPagination(totalImages);
+};
+
 
         // Evitar que el clic en la imagen cierre el popup
         document.getElementById('popupImg').onclick = function(event) {
@@ -305,6 +332,27 @@ footer a:hover {
             event.stopPropagation();
             changeImage(1);
         };
+		
+		function createPagination(totalImages) {
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.onclick = function(e) {
+            e.preventDefault();
+            createGallery(i);
+            window.scrollTo(0, 0);
+        };
+        paginationContainer.appendChild(pageLink);
+    }
+
+    document.body.appendChild(paginationContainer);
+}
+
     </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
