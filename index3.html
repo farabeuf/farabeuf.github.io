@@ -224,15 +224,14 @@ footer a:hover {
 
 		
 		#gallery-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
+      column-count: 3;
+      column-gap: 10px;
   }
 
   .gallery-item {
-      flex: 1 1 calc(33.333% - 10px);
-      box-sizing: border-box;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 10px;
   }
 
   .gallery-item img {
@@ -240,14 +239,13 @@ footer a:hover {
       height: auto;
   }
 		
-		
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 06</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 07</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
