@@ -223,36 +223,13 @@ footer a:hover {
 
 		
 		
-		#pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#pagination-container a {
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-}
-
-#pagination-container a:hover {
-    background-color: #ddd;
-}
-
-		
-		
-		
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 01</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -320,8 +297,8 @@ footer a:hover {
 
 		
 		function createPagination(totalImages, currentPage = 1) {
-    const paginationContainer = document.getElementById('pagination-container');//nuevo
-    paginationContainer.innerHTML = ''; // Limpiar contenedor existente
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
     const totalPages = Math.ceil(totalImages / 15);
     const range = 2;
 
@@ -343,6 +320,13 @@ footer a:hover {
             ellipsis.className = 'pagination-ellipsis';
             paginationContainer.appendChild(ellipsis);
         }
+    }
+
+    const existingPagination = document.querySelector('.pagination');
+    if (existingPagination) {
+        existingPagination.replaceWith(paginationContainer);
+    } else {
+        document.body.appendChild(paginationContainer);
     }
 }
 
@@ -425,8 +409,7 @@ footer a:hover {
         e.preventDefault();
     });
     </script>
-		<div id="pagination-container"></div>
-	<footer>
+		<footer>
     <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
 </body>
