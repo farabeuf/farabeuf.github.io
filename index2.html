@@ -195,24 +195,34 @@ footer a:hover {
 }
 		
 		.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
 
-.pagination a {
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-}
+    .pagination a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 4px;
+    }
 
-.pagination a:hover {
-    background-color: #ddd;
-}
+    .pagination a:hover {
+        background-color: #ddd;
+    }
 
+    @media screen and (max-width: 480px) {
+        .pagination a {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+
+		
+		
     </style>
 </head>
 <body>
@@ -277,13 +287,51 @@ footer a:hover {
         const img = document.createElement('img');
         img.src = imagePath;
         img.alt = `Imagen ${i}`;
-        img.onerror = function() { this.style.display = 'none'; }; // Ocultar imágenes no existentes
+        img.onerror = function() { this.style.display = 'none'; };
         img.onclick = function() { openPopup(this.src); };
         
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
     }
 }
+
+		
+		function createPagination(totalImages, currentPage = 1) {
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+    const range = 2;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            pageLink.onclick = function(e) {
+                e.preventDefault();
+                createGallery(i);
+                createPagination(totalImages, i);
+                window.scrollTo(0, 0);
+            };
+            paginationContainer.appendChild(pageLink);
+        } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+            const ellipsis = document.createElement('span');
+            ellipsis.textContent = '...';
+            ellipsis.className = 'pagination-ellipsis';
+            paginationContainer.appendChild(ellipsis);
+        }
+    }
+
+    const existingPagination = document.querySelector('.pagination');
+    if (existingPagination) {
+        existingPagination.replaceWith(paginationContainer);
+    } else {
+        document.body.appendChild(paginationContainer);
+    }
+}
+
+		
+		
 
 
         let currentIndex = 0;
@@ -314,8 +362,9 @@ footer a:hover {
         window.onload = function() {
     const totalImages = 170; // Ajusta este número al total real de imágenes
     createGallery(1);
-    createPagination(totalImages);
+    createPagination(totalImages, 1);
 };
+
 
 
         // Evitar que el clic en la imagen cierre el popup
