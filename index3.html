@@ -225,22 +225,23 @@ footer a:hover {
 		
 		
 		/*nuevo*/
-		
-#gallery-container {
-      column-count: 3;
-      column-gap: 10px;
-  }
+		#gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
 
-  .gallery-item {
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 10px;
-  }
+.gallery-item {
+    overflow: hidden;
+    border-radius: 8px; /* Opcional, para un diseño más suave */
+}
 
-  .gallery-item img {
-      width: 100%;
-      height: auto;
-  }
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
+}
+
 		
     </style>
 </head>
@@ -248,7 +249,7 @@ footer a:hover {
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 10</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 11</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -290,7 +291,7 @@ function toggleMenu() {
 function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
     const basePath = 'img/streetfoto/';
-    const imagesPerPage = 32; //numero de fotos a mostar en la galería
+    const imagesPerPage = 20; //numero de fotos a mostar en la galería
     const startIndex = (page - 1) * imagesPerPage + 1;
     const endIndex = startIndex + imagesPerPage - 1;
 
