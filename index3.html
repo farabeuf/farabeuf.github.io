@@ -223,6 +223,23 @@ footer a:hover {
     }
 
 		
+		#gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+  }
+
+  .gallery-item {
+      flex: 1 1 calc(33.333% - 10px);
+      box-sizing: border-box;
+  }
+
+  .gallery-item img {
+      width: 100%;
+      height: auto;
+  }
+		
 		
     </style>
 </head>
@@ -230,7 +247,7 @@ footer a:hover {
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 05</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 06</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -381,16 +398,6 @@ document.getElementById('nextBtn').onclick = function(event) {
 
 		
 		
-		
-		function adjustGalleryItems() {
-    const items = document.querySelectorAll('.gallery-item img');
-    items.forEach(img => {
-        img.style.height = `${img.width}px`; // Mantiene un aspecto cuadrado si es necesario
-    });
-}
-
-window.addEventListener('resize', adjustGalleryItems);
-window.addEventListener('load', adjustGalleryItems);
 		
 		
     </script>
