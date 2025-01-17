@@ -18,6 +18,7 @@
             margin: auto;
             overflow: hidden;
             padding: 20px;
+			margin-top: 100px; /* Ajusta el valor según la altura del header */
         }
         .about-section {
             display: flex;
@@ -97,8 +98,14 @@
 }
 
 footer {
+    background-color: #f4f4f4;
     padding: 20px 0;
     text-align: center;
+	overflow: hidden; /* Evita desbordamientos */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+	box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 footer a {
@@ -167,9 +174,9 @@ footer a:hover {
     </style>
 </head>
 <body>
-    <header>
+<header>
         <div class="logo-container">
-            <a href="index.html">
+          <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
             
         
@@ -194,7 +201,7 @@ footer a:hover {
     </header>
 
     <div class="container">
-        <div class="language-selector">
+      <div class="language-selector">
             <label for="language">Idioma / Language / Sprache:</label>
             <select id="language" onchange="changeLanguage()">
                 <option value="es">Español</option>
@@ -246,23 +253,23 @@ footer a:hover {
     <script>
         function changeLanguage() {
             var language = document.getElementById("language").value;
-            document.getElementById("es").style.display = "none";
-            document.getElementById("en").style.display = "none";
-            document.getElementById("de").style.display = "none";
-            document.getElementById(language).style.display = "block";
+    document.getElementById("es").style.display = "none";
+    document.getElementById("en").style.display = "none";
+    document.getElementById("de").style.display = "none";
+    document.getElementById(language).style.display = "block";
         }
 
         function toggleMenu() {
-            var x = document.getElementById("myMenu");
-            if (x.className === "menu") {
-                x.className += " responsive";
-            } else {
-                x.className = "menu";
+    var menu = document.getElementById("myMenu");
+    if (menu.className === "menu") {
+        menu.className += " responsive";
+    } else {
+        menu.className = "menu";
             }
         }
     </script>
 	<footer>
-    <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
+    © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
 </body>
 </html>

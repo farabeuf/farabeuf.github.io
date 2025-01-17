@@ -28,7 +28,6 @@
     z-index: 10;
     box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
 }
-
         .logo-container {
             display: flex;
             align-items: center;
@@ -41,16 +40,38 @@
         }
 
         .menu {
-            display: flex;
-            align-items: center;
-        }
+    display: flex;
+    align-items: center;
+    margin-right: 15px; /* Añadir margen a la derecha del menú */
+}
 
-        .menu a, .dropdown > a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-        }
+.menu a, .dropdown > a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.menu a:last-child {
+    margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
+}
+
+footer {
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    margin: 5px;
+}
+
+footer a:hover {
+    background-color: #f1f1f1;
+}
 
         .dropdown {
             position: relative;
