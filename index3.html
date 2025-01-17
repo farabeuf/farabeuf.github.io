@@ -227,7 +227,7 @@ footer a:hover {
 		/*nuevo*/
 		#gallery-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 3fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
     gap: 10px;
 }
 
@@ -249,7 +249,7 @@ footer a:hover {
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 13</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 14</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -291,7 +291,7 @@ function toggleMenu() {
 function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
     const basePath = 'img/streetfoto/';
-    const imagesPerPage = 20;
+    const imagesPerPage = 15;
     const startIndex = (page - 1) * imagesPerPage + 1;
     const endIndex = startIndex + imagesPerPage - 1;
 
@@ -318,7 +318,7 @@ function createGallery(page = 1) {
 function createPagination(totalImages, currentPage = 1) {
     const paginationContainer = document.createElement('div');
     paginationContainer.className = 'pagination';
-    const totalPages = Math.ceil(totalImages / 20);
+    const totalPages = Math.ceil(totalImages / 15);
     const range = 2;
 
     for (let i = 1; i <= totalPages; i++) {
