@@ -327,7 +327,7 @@ function createGallery(page = 1) {
     galleryContainer.innerHTML = '';
 
     for (let i = startIndex; i <= endIndex; i++) {
-        const paddedNumber = i.toString().padStart(3, '0');
+        const paddedNumber = i.toString().padStart(2, '0');//cuantos digitos tiene el nombre del archivo 2 o 3
         const imagePath = `${basePath}img_chidas_${paddedNumber}.jpg`;
 
         const galleryItem = document.createElement('div');
