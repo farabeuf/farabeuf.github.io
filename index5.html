@@ -288,7 +288,7 @@ footer a:hover {
 
     for (let i = startIndex; i <= endIndex; i++) {
         const paddedNumber = i.toString().padStart(3, '0');
-        const imagePath = ${basePath}img_streetfoto_${paddedNumber}.jpg;
+        const imagePath = '${basePath}img_streetfoto_${paddedNumber}.jpg';
         
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
