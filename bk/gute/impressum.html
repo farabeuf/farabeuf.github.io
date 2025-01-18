@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - Farabeuf Foto</title>
+    <link rel="icon" href="img/web/fbf.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .about-image {
+            flex: 1;
+            min-width: 200px;
+            max-width: 100%;
+            padding: 20px;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .about-text {
+            flex: 2;
+            padding: 20px;
+        }
+        .language-selector {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+            }
+            .about-image, .about-text {
+                flex: 1 100%;
+            }
+        }
+        /* Estilos del menú */
+        header {
+    background-color: white;
+    color: #333;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed; /* Fijar el menú en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
+}
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 54px;
+            height: 54px;
+            margin-right: 10px;
+        }
+                .menu {
+            display: flex;
+    align-items: center;
+    margin-right: 15px; /* Añadir margen a la derecha del menú */
+        }
+
+        .menu a, .dropdown > a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+		.menu a:last-child {
+    margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
+}
+		footer {
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    margin: 5px;
+}
+
+footer a:hover {
+    background-color: #f1f1f1;
+}
+		#gallery-container {
+    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
+}
+		
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .menu .icon {
+            display: none;
+        }
+        @media screen and (max-width : 1024px ){
+            .menu a:not(:first-child), .dropdown {display: none;}
+            .menu a.icon {
+                float: right;
+                display: block;
+            }
+            .menu.responsive {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .menu.responsive a.icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .menu.responsive a, .menu.responsive .dropdown {
+                display: block;
+                text-align: left;
+            }
+            .menu.responsive .dropdown-content {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
+            
+        
+        <nav class="menu" id="myMenu">
+            <a href="index.html">Home</a>
+            <div class="dropdown">
+                <a href="#">Gallery</a>
+                <div class="dropdown-content">
+                    <a href="urban.html">Urban and Architecture</a>
+                    <a href="events.html">Events</a>
+                    <a href="landscapes.html">Landscapes</a>
+                    <a href="nature.html">Nature</a>
+                    <a href="streetfoto.html">Street Photography</a>
+                    <a href="street-art.html">Street Art</a>
+					<a href="misc.html">Misc</a>
+                </div>
+            </div>
+            <a href="about.html">About Me</a>
+            <a href="https://www.instagram.com/alfonso_arroyo_samano" target="_blank">Instagram</a>
+            <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
+        </nav>
+    </header>
+
+    <div class="container">
+      <div class="about-section">
+        <div class="about-text">
+              <div id="es">
+                  <h1>&nbsp;</h1>
+                  <p><strong>Impressum<br>
+                  SEITENBETREIBER</strong></p>
+                  <p>Alfonso Rubén Arroyo Sámano<br>
+                    Schwarzenbachstr. 11<br>
+                    78661 Dietingen<br>
+                    Deutschland<br>
+                    E-Mail: farabeuf@gmail.com<br>
+                    Tel.: +49 151 111 73 197<br>
+                    Webseite: www.farabeuf.com</p>
+                  <p><strong>URHEBERRECHT UND BILDNACHWEISE</strong></p>
+                  <p>Die Inhalte der Internetseite www.farabeuf.com einschließlich der Bilder und Gestaltung unterliegen dem Urheberrecht und sonstigen Gesetzen zum Schutz des geistigen Eigentums, soweit nicht anders angegeben. Eine Verwendung von Fotografien, Gestaltungen oder Seiteninhalten ohne Lizenzierung durch den Urheber ist nicht gestattet.</p>
+                  <p><strong>HAFTUNG FÜR INHALTE</strong></p>
+                  <p>Die Inhalte dieser Webseite wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+                  <p><strong>HAFTUNG FÜR LINKS</strong></p>
+                  <p>Unsere Webseite enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+                  <p></p>
+          </div>
+                <div id="en" style="display:none;">
+                    <h2>About Me</h2>
+                    <p>For me, photography is more than just an image – it means capturing a moment: a genuine, unfiltered emotion, a story. It is a captured landscape, a quiet sunset, a spontaneous smile, or the expression of a person who fascinates me. I don't like staged or artificial images. My photography is based on authenticity and composition that arises in the moment of capture.</p>
+                    <p>For me, post-processing means adjusting contrasts and colors to emphasize the atmosphere and feeling of the moment – not to change it.</p>
+                    <p>I am not only looking for beauty but for authenticity and the magic in everyday moments.</p>
+                    <p>I love photographing on the street, observing people, and capturing the incredible diversity of faces, shapes, textures, and patterns, with the freedom to document genuine, spontaneous moments from unusual perspectives.</p>
+                    <p><strong>My subjects</strong>: Landscapes, travel, portraits, street art, street photography, concerts, animals, and people.</p>
+                </div>
+                <div id="de" style="display:none;">
+                    <h2>Über Mich</h2>
+                    <p>Für mich ist Fotografie mehr als nur ein Bild – es bedeutet, einen Augenblick einzufangen: eine echte, unverfälschte Emotion, eine Geschichte. Es ist eine eingefangene Landschaft, ein stiller Sonnenuntergang, ein spontanes Lächeln oder der Ausdruck einer Person, die mich fasziniert. Ich mag keine gestellten oder künstlichen Bilder. Meine Fotografie basiert auf Authentizität und auf der Komposition, die bereits im Moment der Aufnahme entsteht.</p>
+                    <p>Bildbearbeitung bedeutet für mich, Kontraste und Farben anzupassen, um die Atmosphäre und das Gefühl des Moments zu unterstreichen – nicht, um ihn zu verändern.</p>
+                    <p>Ich suche nicht nur nach Schönheit, sondern nach Authentizität und der Magie in alltäglichen Momenten.</p>
+                    <p>Ich liebe es, auf der Straße zu fotografieren, Menschen zu beobachten und die unglaubliche Vielfalt an Gesichtern, Formen, Texturen und Mustern festzuhalten, mit der Freiheit, echte, spontane Momente aus ungewöhnlichen Blickwinkeln zu dokumentieren.</p>
+                    <p><strong>Meine Motive</strong>: Landschaften, Reisen, Porträts, Streetart, Streetfotografie, Konzerte, Tiere und Menschen.</p>
+                </div>
+			  </div>
+        </div>
+    </div>
+
+    <script>
+        function changeLanguage() {
+            var language = document.getElementById("language").value;
+            document.getElementById("es").style.display = "none";
+            document.getElementById("en").style.display = "none";
+            document.getElementById("de").style.display = "none";
+            document.getElementById(language).style.display = "block";
+        }
+
+        function toggleMenu() {
+            var x = document.getElementById("myMenu");
+            if (x.className === "menu") {
+                x.className += " responsive";
+            } else {
+                x.className = "menu";
+            }
+        }
+    </script>
+	<footer>
+    © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
+</footer>
+</body>
+</html>

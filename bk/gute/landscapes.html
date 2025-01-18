@@ -113,27 +113,22 @@
             }
         }
 
-        .gallery { /*nuevo formato Grid */
-            display: grid;/*nuevo formato Grid */
-    		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));/*nuevo formato Grid */
-    		gap: 15px;/*nuevo formato Grid */
-    		padding: 20px;/*nuevo formato Grid */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
         }
 
         .gallery-item {
-            overflow: hidden;	/*nuevo formato Grid */   
-			border-radius: 8px;	/*nuevo formato Grid */
-    		aspect-ratio: 1 / 1;/*nuevo formato Grid */
+            flex: 1 0 200px;
         }
 
         .gallery-item img {
-            width: 100%;		/*nuevo formato Grid */
-            height: 100%;		/*nuevo formato Grid */
-			object-fit: cover;	/*nuevo formato Grid */
-    		object-position: center;/*nuevo formato Grid */
+            width: 100%;
+            height: auto;
             cursor: pointer;
-            transition: transform 0.3s ease;/*nuevo formato Grid */
-			margin: 10px; /* Añade márgenes alrededor de cada imagen en la galería */
+            transition: transform 0.3s ease;
         }
 
         .gallery-item img:hover {
@@ -324,7 +319,7 @@ function toggleMenu() {
 
 function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
-    const basePath = 'img/streetart/'; //carpeta en donde se encuentran las imagenes
+    const basePath = 'img/landscapes/';
     const imagesPerPage = 15;
     const startIndex = (page - 1) * imagesPerPage + 1;
     const endIndex = startIndex + imagesPerPage - 1;
@@ -333,7 +328,7 @@ function createGallery(page = 1) {
 
     for (let i = startIndex; i <= endIndex; i++) {
         const paddedNumber = i.toString().padStart(2, '0');//cuantos digitos tiene el nombre del archivo 2 o 3
-        const imagePath = `${basePath}img_streetart_${paddedNumber}.jpg`;
+        const imagePath = `${basePath}img_landscapes_${paddedNumber}.jpg`;
 
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
@@ -343,9 +338,6 @@ function createGallery(page = 1) {
         img.alt = `Imagen ${i}`;
         img.onerror = function() { this.style.display = 'none'; };
         img.onclick = function() { openPopup(this.src); };
-				img.style.objectFit = 'cover'; // Cambio para ver las imagenes del mismo tamaño
-        img.style.width = '100%'; // Cambio para ver las imagenes del mismo tamaño
-        img.style.height = '100%';// Cambio para ver las imagenes del mismo tamaño
 
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
@@ -410,7 +402,7 @@ function changeImage(direction) {
 
 window.onload = function() {
 	// Numero de imagines a mostrar en la galería
-    const totalImages = 59;
+    const totalImages = 86;
     createGallery(1);
     createPagination(totalImages, 1);
 };
@@ -454,7 +446,7 @@ function changeImage(direction) {
 }
 
 window.onload = function() {
-    const totalImages = 59; // Ajusta este número al total real de imágenes
+    const totalImages = 86; // Ajusta este número al total real de imágenes
     createGallery(1);
     createPagination(totalImages, 1);
 };
