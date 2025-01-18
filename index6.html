@@ -121,9 +121,9 @@
         }
 
         .gallery-item {
-            flex: 0 0 200px;
-    height: 200px;
-    overflow: hidden;
+            flex: 0 0 200px;/* aquí se cambia el formato de la galería para que toas las imagenes tengan el mismo tamaño */
+   			height: 200px;
+    		overflow: hidden;
         }
 
         .gallery-item img {
@@ -133,6 +133,7 @@
     		object-position: center;
             cursor: pointer;
             transition: transform 0.3s ease;
+			margin: 10px; /* Añade márgenes alrededor de cada imagen en la galería */
         }
 
         .gallery-item img:hover {
@@ -342,9 +343,9 @@ function createGallery(page = 1) {
         img.alt = `Imagen ${i}`;
         img.onerror = function() { this.style.display = 'none'; };
         img.onclick = function() { openPopup(this.src); };
-		img.style.objectFit = 'cover'; // Añade esta línea
-        img.style.width = '100%'; // Añade esta línea
-        img.style.height = '100%';// Añade esta línea
+		img.style.objectFit = 'cover'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.width = '100%'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.height = '100%';// Cambio para ver las imagenes del mismo tamaño
 
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
