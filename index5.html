@@ -11,12 +11,20 @@
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+			padding-top: 80px; /* Ajusta el espacio superior para que el contenido no quede cubierto por el menú fijo */
+			
+			
+			height: 100%;
+			display: flex;
+    flex-direction: column;
+			
         }
 
         header {
-    background-color: white;
+            background-color: white;
     color: #333;
-    padding: 1em;
+			
+    padding: 1em; /* Mantén el padding horizontal, elimina el vertical, el original estaba en 1em nada mas */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,37 +47,20 @@
             margin-right: 10px;
         }
 
-		.menu {
-    display: flex;
+        .menu {
+            display: flex;
     align-items: center;
     margin-right: 15px; /* Añadir margen a la derecha del menú */
-}
+        }
+
         .menu a, .dropdown > a {
     color: #333;
     text-decoration: none;
     padding: 10px 15px;
     display: block;
 }
-
-.menu a:last-child {
+		.menu a:last-child {
     margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
-}
-
-footer {
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: inline-block;
-    margin: 5px;
-}
-
-footer a:hover {
-    background-color: #f1f1f1;
 }
 
         .dropdown {
@@ -188,21 +179,66 @@ footer a:hover {
         #nextBtn {
             right: 10px;
         }
+		footer {
+    padding: 20px 0;
+    text-align: center;
+			background-color: #f1f1f1;
+}
+
+		
+		footer a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    margin: 5px;
+}
+
+footer a:hover {
+    background-color: #f1f1f1;
+}
 		#gallery-container {
-    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
+    flex: 1; /* Asegura que la galería no quede bajo el menú fijo */
 }
 		
 		.pagination {
-    text-align: center;
-    padding: 10px 0;
-}
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+			text-align: center;
+			padding: 10px 0;
+    }
+
+    .pagination a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 4px;
+    }
+
+    .pagination a:hover {
+        background-color: #ddd;
+    }
+
+    @media screen and (max-width: 480px) {
+        .pagination a {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+
+		
+		
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf 01 Foto</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto 01</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -233,15 +269,15 @@ footer a:hover {
 
     <script>
         function toggleMenu() {
-    var x = document.getElementById("myMenu");
-    if (x.className === "menu") {
-        x.className += " responsive";
-    } else {
-        x.className = "menu";
-    }
-}
+            var x = document.getElementById("myMenu");
+            if (x.className === "menu") {
+                x.className += " responsive";
+            } else {
+                x.className = "menu";
+            }
+        }
 
-function createGallery(page = 1) {
+        function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
     const basePath = 'img/streetfoto/';
     const imagesPerPage = 14;
@@ -252,23 +288,24 @@ function createGallery(page = 1) {
 
     for (let i = startIndex; i <= endIndex; i++) {
         const paddedNumber = i.toString().padStart(3, '0');
-        const imagePath = `${basePath}img_streetfoto_${paddedNumber}.jpg`;
-
+        const imagePath = ${basePath}img_streetfoto_${paddedNumber}.jpg;
+        
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
-
+        
         const img = document.createElement('img');
         img.src = imagePath;
-        img.alt = `Imagen ${i}`;
+        img.alt = Imagen ${i};
         img.onerror = function() { this.style.display = 'none'; };
         img.onclick = function() { openPopup(this.src); };
-
+        
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
     }
 }
 
-function createPagination(totalImages, currentPage = 1) {
+		
+		function createPagination(totalImages, currentPage = 1) {
     const paginationContainer = document.createElement('div');
     paginationContainer.className = 'pagination';
     const totalPages = Math.ceil(totalImages / 15);
@@ -298,59 +335,84 @@ function createPagination(totalImages, currentPage = 1) {
     if (existingPagination) {
         existingPagination.replaceWith(paginationContainer);
     } else {
-        // Inserta la paginación en un contenedor específico
-        const contentContainer = document.querySelector('.content'); // Ajusta el selector según tu estructura HTML
-        contentContainer.appendChild(paginationContainer);
+        document.body.appendChild(paginationContainer);
     }
 }
 
-let currentIndex = 0;
-let images;
+		
+		
 
-function openPopup(src) {
-    const popup = document.getElementById('popup');
-    const popupImg = document.getElementById('popupImg');
-    popup.style.display = 'flex';
-    popupImg.src = src;
-    images = document.querySelectorAll('.gallery-item img');
-    currentIndex = Array.from(images).findIndex(img => img.src === src);
-}
 
-function closePopup() {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'none';
-}
+        let currentIndex = 0;
+        let images;
 
-function changeImage(direction) {
-    currentIndex += direction;
-    if (currentIndex < 0) currentIndex = images.length - 1;
-    if (currentIndex >= images.length) currentIndex = 0;
-    const popupImg = document.getElementById('popupImg');
-    popupImg.src = images[currentIndex].src;
-}
+        function openPopup(src) {
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popupImg');
+            popup.style.display = 'flex';
+            popupImg.src = src;
+            images = document.querySelectorAll('.gallery-item img');
+            currentIndex = Array.from(images).findIndex(img => img.src === src);
+        }
 
-window.onload = function() {
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = images[currentIndex].src;
+        }
+
+        window.onload = function() {
     const totalImages = 170; // Ajusta este número al total real de imágenes
     createGallery(1);
     createPagination(totalImages, 1);
 };
 
-// Evitar que el clic en la imagen cierre el popup
-document.getElementById('popupImg').onclick = function(event) {
-    event.stopPropagation();
-};
 
-// Evitar que el clic en los botones cierre el popup
-document.getElementById('prevBtn').onclick = function(event) {
-    event.stopPropagation();
-    changeImage(-1);
-};
 
-document.getElementById('nextBtn').onclick = function(event) {
-    event.stopPropagation();
-    changeImage(1);
-};
-<div class="pagination"></div>
+        // Evitar que el clic en la imagen cierre el popup
+        document.getElementById('popupImg').onclick = function(event) {
+            event.stopPropagation();
+        };
+
+        // Evitar que el clic en los botones cierre el popup
+        document.getElementById('prevBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(-1);
+        };
+
+        document.getElementById('nextBtn').onclick = function(event) {
+            event.stopPropagation();
+            changeImage(1);
+        };
+		
+		function createPagination(totalImages) {
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.onclick = function(e) {
+            e.preventDefault();
+            createGallery(i);
+            window.scrollTo(0, 0);
+        };
+        paginationContainer.appendChild(pageLink);
+    }
+
+    document.body.appendChild(paginationContainer);
+}
+
+		<div class="pagination"></div>
     </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
