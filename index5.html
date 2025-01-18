@@ -242,6 +242,34 @@ footer a:hover {
     object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
 }
 
+	.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination-ellipsis {
+    padding: 8px 16px;
+}
+
 		
     </style>
 </head>
@@ -295,7 +323,7 @@ function createGallery(page = 1) {
     const startIndex = (page - 1) * imagesPerPage + 1;
     const endIndex = startIndex + imagesPerPage - 1;
 
-    galleryContainer.innerHTML = ''; // Limpiar galería existente
+    galleryContainer.innerHTML = '';
 
     for (let i = startIndex; i <= endIndex; i++) {
         const paddedNumber = i.toString().padStart(3, '0');
@@ -316,7 +344,8 @@ function createGallery(page = 1) {
 }
 
 function createPagination(totalImages, currentPage = 1) {
-    const paginationContainer = document.createElement('div');
+    const paginationContainer = document.getElementById('pagination-container');
+    paginationContainer.innerHTML = '';
     paginationContainer.className = 'pagination';
     const totalPages = Math.ceil(totalImages / 15);
     const range = 2;
@@ -326,6 +355,9 @@ function createPagination(totalImages, currentPage = 1) {
             const pageLink = document.createElement('a');
             pageLink.href = '#';
             pageLink.textContent = i;
+            if (i === currentPage) {
+                pageLink.className = 'active';
+            }
             pageLink.onclick = function(e) {
                 e.preventDefault();
                 createGallery(i);
@@ -340,19 +372,54 @@ function createPagination(totalImages, currentPage = 1) {
             paginationContainer.appendChild(ellipsis);
         }
     }
-
-    const existingPagination = document.querySelector('.pagination');
-    if (existingPagination) {
-        existingPagination.replaceWith(paginationContainer);
-    } else {
-        // Inserta la paginación en un contenedor específico
-        const contentContainer = document.querySelector('.content'); // Ajusta el selector según tu estructura HTML
-        contentContainer.appendChild(paginationContainer);
-    }
 }
 
 let currentIndex = 0;
 let images;
+
+function openPopup(src) {
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
+}
+
+window.onload = function() {
+    const totalImages = 170;
+    createGallery(1);
+    createPagination(totalImages, 1);
+};
+
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
+
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
+
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
+
+		
 
 function openPopup(src) {
     const popup = document.getElementById('popup');
@@ -408,10 +475,11 @@ document.getElementById('nextBtn').onclick = function(event) {
         e.preventDefault();
     });
     </script>
+	<div id="pagination-container"></div> 
 		<footer>
     <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
-	<div id="page-indicator"></div> 
+	
 
 </body>
 </html>
