@@ -243,19 +243,13 @@ footer a:hover {
 }
 
 		
-		.pagination a.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
-			align-items: center;
-}
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto Favorito001</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto Favorito1256</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -285,66 +279,130 @@ footer a:hover {
     </div>
 </div>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    createGallery(1);
-    createPagination(170, 1);
-
-    function createGallery(page) {
-        const galleryContainer = document.getElementById('gallery-container');
-        galleryContainer.innerHTML = ''; // Clear the gallery content
-
-        const startImage = (page - 1) * 14 + 1;
-        const endImage = Math.min(startImage + 13, 52); // Ensure not to exceed the total number of images
-
-        for (let i = startImage; i <= endImage; i++) {
-            const img = document.createElement('img');
-            img.src = `img/streetfoto/img_streetfoto_${i}.jpg`;
-            img.alt = `Image ${i}`;
-            galleryContainer.appendChild(img);
-        }
+function toggleMenu() {
+    var x = document.getElementById("myMenu");
+    if (x.className === "menu") {
+        x.className += " responsive";
+    } else {
+        x.className = "menu";
     }
+}
 
-    function createPagination(totalImages, currentPage = 1) {
-        const paginationContainer = document.createElement('div');
-        paginationContainer.className = 'pagination';
+function createGallery(page = 1) {
+    const galleryContainer = document.getElementById('gallery-container');
+    const basePath = 'img/streetfoto/';
+    const imagesPerPage = 15;
+    const startIndex = (page - 1) * imagesPerPage + 1;
+    const endIndex = startIndex + imagesPerPage - 1;
 
-        const totalPages = Math.ceil(totalImages / 14);
+    galleryContainer.innerHTML = ''; // Limpiar galería existente
 
-        for (let i = 1; i <= totalPages; i++) {
+    for (let i = startIndex; i <= endIndex; i++) {
+        const paddedNumber = i.toString().padStart(3, '0');
+        const imagePath = `${basePath}img_streetfoto_${paddedNumber}.jpg`;
+
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = `Imagen ${i}`;
+        img.onerror = function() { this.style.display = 'none'; };
+        img.onclick = function() { openPopup(this.src); };
+
+        galleryItem.appendChild(img);
+        galleryContainer.appendChild(galleryItem);
+    }
+}
+
+function createPagination(totalImages, currentPage = 1) {
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+    const range = 2;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
             const pageLink = document.createElement('a');
             pageLink.href = '#';
             pageLink.textContent = i;
-
-            // Mark the current page with an active class
-            if (i === currentPage) {
-                pageLink.className = 'active';
-            }
-
-            pageLink.onclick = function(event) {
-                event.preventDefault();
+            pageLink.onclick = function(e) {
+                e.preventDefault();
                 createGallery(i);
-                updatePagination(i);
+                createPagination(totalImages, i);
+                window.scrollTo(0, 0);
             };
-
             paginationContainer.appendChild(pageLink);
+        } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+            const ellipsis = document.createElement('span');
+            ellipsis.textContent = '...';
+            ellipsis.className = 'pagination-ellipsis';
+            paginationContainer.appendChild(ellipsis);
         }
-
-        // Ensure to replace existing pagination
-        const existingPagination = document.querySelector('.pagination');
-        if (existingPagination) {
-            existingPagination.remove();
-        }
-
-        document.getElementById('gallery-container').appendChild(paginationContainer);
     }
 
-    function updatePagination(currentPage) {
-        createPagination(170, currentPage);
+    const existingPagination = document.querySelector('.pagination');
+    if (existingPagination) {
+        existingPagination.replaceWith(paginationContainer);
+    } else {
+        // Inserta la paginación en un contenedor específico
+        const contentContainer = document.querySelector('.content'); // Ajusta el selector según tu estructura HTML
+        contentContainer.appendChild(paginationContainer);
     }
-});
-</script>
+}
 
-	
+let currentIndex = 0;
+let images;
+
+function openPopup(src) {
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
+}
+
+window.onload = function() {
+    const totalImages = 170; // Ajusta este número al total real de imágenes
+    createGallery(1);
+    createPagination(totalImages, 1);
+};
+
+// Evitar que el clic en la imagen cierre el popup
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
+
+// Evitar que el clic en los botones cierre el popup
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
+
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
+
+		
+		
+		
+		
+    </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
