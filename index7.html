@@ -113,17 +113,17 @@
             }
         }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px;
+        .gallery { /*nuevo formato Grid */
+            display: grid;/*nuevo formato Grid */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));/*nuevo formato Grid */
+    gap: 15px;/*nuevo formato Grid */
+    padding: 20px;/*nuevo formato Grid */
         }
 
         .gallery-item {
-            flex: 0 0 200px;/* aquí se cambia el formato de la galería para que toas las imagenes tengan el mismo tamaño */
-   			height: 200px;
-    		overflow: hidden;
+            overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
         }
 
         .gallery-item img {
@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Favorito 2156</strong></p></div>
+            <p><strong>Farabeuf Foto Favorito 2202</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
