@@ -11,12 +11,14 @@
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+			padding-top: 80px; /* Ajusta el espacio superior para que el contenido no quede cubierto por el menú fijo */
         }
 
         header {
-    background-color: white;
+            background-color: white;
     color: #333;
-    padding: 1em;
+			
+    padding: 1em; /* Mantén el padding horizontal, elimina el vertical, el original estaba en 1em nada mas */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +30,6 @@
     z-index: 10;
     box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
 }
-
         .logo-container {
             display: flex;
             align-items: center;
@@ -41,37 +42,19 @@
         }
 
         .menu {
-    display: flex;
+            display: flex;
     align-items: center;
     margin-right: 15px; /* Añadir margen a la derecha del menú */
-}
+        }
 
-.menu a, .dropdown > a {
+        .menu a, .dropdown > a {
     color: #333;
     text-decoration: none;
     padding: 10px 15px;
     display: block;
 }
-
-.menu a:last-child {
+		.menu a:last-child {
     margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
-}
-
-footer {
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: inline-block;
-    margin: 5px;
-}
-
-footer a:hover {
-    background-color: #f1f1f1;
 }
 
         .dropdown {
@@ -190,16 +173,112 @@ footer a:hover {
         #nextBtn {
             right: 10px;
         }
-		#gallery-container {
-    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
+		footer {
+    padding: 20px 0;
+    text-align: center;
 }
+
+		
+		footer a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    margin: 5px;
+}
+
+footer a:hover {
+    background-color: #f1f1f1;
+}
+		#gallery-container {
+    margin-top: 10px; /* Asegura que la galería no quede bajo el menú fijo */
+}
+		
+		.pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+			padding: 10px 0;/*nuevo*/
+    }
+
+    .pagination a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 4px;
+    }
+
+    .pagination a:hover {
+        background-color: #ddd;
+    }
+
+    @media screen and (max-width: 480px) {
+        .pagination a {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+
+		
+		
+		/*nuevo*/
+		#gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
+    gap: 10px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 8px; /* Opcional, para un diseño más suave */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
+}
+
+	.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination-ellipsis {
+    padding: 8px 16px;
+}
+
+		
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a><p><strong>Farabeuf Foto</strong></p></div>
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
+            <p><strong>Farabeuf Foto</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -219,7 +298,7 @@ footer a:hover {
             <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
         </nav>
     </header>
-
+<div class="content">
     <div id="gallery-container" class="gallery"></div>
 
     <div id="popup" class="popup" onclick="closePopup()">
@@ -227,94 +306,180 @@ footer a:hover {
         <button id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
         <button id="nextBtn" onclick="changeImage(1)">&#10095;</button>
     </div>
-
+</div>
     <script>
-        function toggleMenu() {
-            var x = document.getElementById("myMenu");
-            if (x.className === "menu") {
-                x.className += " responsive";
-            } else {
-                x.className = "menu";
+function toggleMenu() {
+    var x = document.getElementById("myMenu");
+    if (x.className === "menu") {
+        x.className += " responsive";
+    } else {
+        x.className = "menu";
+    }
+}
+
+function createGallery(page = 1) {
+    const galleryContainer = document.getElementById('gallery-container');
+    const basePath = 'img/streetart/'; //carpeta en donde se encuentran las imagenes
+    const imagesPerPage = 15;
+    const startIndex = (page - 1) * imagesPerPage + 1;
+    const endIndex = startIndex + imagesPerPage - 1;
+
+    galleryContainer.innerHTML = '';
+
+    for (let i = startIndex; i <= endIndex; i++) {
+        const paddedNumber = i.toString().padStart(2, '0');//cuantos digitos tiene el nombre del archivo 2 o 3
+        const imagePath = `${basePath}img_streetart_${paddedNumber}.jpg`;
+
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = `Imagen ${i}`;
+        img.onerror = function() { this.style.display = 'none'; };
+        img.onclick = function() { openPopup(this.src); };
+
+        galleryItem.appendChild(img);
+        galleryContainer.appendChild(galleryItem);
+    }
+}
+
+function createPagination(totalImages, currentPage = 1) {
+    const paginationContainer = document.getElementById('pagination-container');
+    paginationContainer.innerHTML = '';
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+    const range = 2;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            if (i === currentPage) {
+                pageLink.className = 'active';
             }
+            pageLink.onclick = function(e) {
+                e.preventDefault();
+                createGallery(i);
+                createPagination(totalImages, i);
+                window.scrollTo(0, 0);
+            };
+            paginationContainer.appendChild(pageLink);
+        } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+            const ellipsis = document.createElement('span');
+            ellipsis.textContent = '...';
+            ellipsis.className = 'pagination-ellipsis';
+            paginationContainer.appendChild(ellipsis);
         }
+    }
+}
 
-        function createGallery() {
-            const galleryContainer = document.getElementById('gallery-container');
-            // Ubicación de las imagenes
-			const basePath = 'img/streetart/';
-			// Numero de imagines a mostrar en la galería
-            const totalImages = 59;
+let currentIndex = 0;
+let images;
 
-            for (let i = 1; i <= totalImages; i++) {
-                const paddedNumber = i.toString().padStart(2, '0');
-				// Nombre de la imagen
-                const imagePath = `${basePath}img_streetart_${paddedNumber}.jpg`;
-                
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                
-                const img = document.createElement('img');
-                img.src = imagePath;
-                img.alt = `Imagen ${i}`;
-                img.onclick = function() { openPopup(this.src); };
-                
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-            }
-        }
+function openPopup(src) {
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
 
-        let currentIndex = 0;
-        let images;
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
 
-        function openPopup(src) {
-            const popup = document.getElementById('popup');
-            const popupImg = document.getElementById('popupImg');
-            popup.style.display = 'flex';
-            popupImg.src = src;
-            images = document.querySelectorAll('.gallery-item img');
-            currentIndex = Array.from(images).findIndex(img => img.src === src);
-        }
+function changeImage(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
+}
 
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
+window.onload = function() {
+	// Numero de imagines a mostrar en la galería
+    const totalImages = 59;
+    createGallery(1);
+    createPagination(totalImages, 1);
+};
 
-        function changeImage(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            if (currentIndex >= images.length) currentIndex = 0;
-            const popupImg = document.getElementById('popupImg');
-            popupImg.src = images[currentIndex].src;
-        }
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
 
-        window.onload = function() {
-            createGallery();
-        };
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
 
-        // Evitar que el clic en la imagen cierre el popup
-        document.getElementById('popupImg').onclick = function(event) {
-            event.stopPropagation();
-        };
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
 
-        // Evitar que el clic en los botones cierre el popup
-        document.getElementById('prevBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(-1);
-        };
+		
 
-        document.getElementById('nextBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(1);
-        };
+function openPopup(src) {
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
+}
+
+window.onload = function() {
+    const totalImages = 59; // Ajusta este número al total real de imágenes
+    createGallery(1);
+    createPagination(totalImages, 1);
+};
+
+// Evitar que el clic en la imagen cierre el popup
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
+
+// Evitar que el clic en los botones cierre el popup
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
+
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
+
+		
+		
+		
+		
     </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     });
     </script>
+	<div id="pagination-container"></div> 
 		<footer>
-    <a href="impressum.html">Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
-</footer>
+    © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
+	</footer>
 </body>
 </html>
