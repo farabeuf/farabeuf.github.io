@@ -313,6 +313,7 @@ footer a:hover {
     </div>
 </div>
     <script>
+		
 		const categories = [
   { name: 'urban', path: 'img/urban/', digits: 2 },
   { name: 'events', path: 'img/events/', digits: 2 },
@@ -327,40 +328,15 @@ function getLatestImages(totalImages = 45) {
   let images = [];
   const imagesPerCategory = Math.ceil(totalImages / categories.length);
   
-  return new Promise((resolve) => {
-    let loadedCategories = 0;
-
-    categories.forEach(category => {
-      let categoryImages = [];
-      for (let i = category.digits === 2 ? 99 : 999; i > 0 && categoryImages.length < imagesPerCategory; i--) {
-        const paddedNumber = i.toString().padStart(category.digits, '0');
-        const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-        
-        const img = new Image();
-        img.src = imagePath;
-        img.onload = function() {
-          categoryImages.push({ src: imagePath, category: category.name });
-          
-          if (categoryImages.length === imagesPerCategory || i === 1) {
-            images.push(...categoryImages);
-            loadedCategories++;
-
-            if (loadedCategories === categories.length) {
-              resolve(images.slice(0, totalImages));
-            }
-          }
-        };
-        img.onerror = function() {
-          if (i === 1) {
-            loadedCategories++;
-            if (loadedCategories === categories.length) {
-              resolve(images.slice(0, totalImages));
-            }
-          }
-        };
-      }
-    });
+  categories.forEach(category => {
+    for (let i = category.digits === 2 ? 99 : 999; i > 0 && images.length < totalImages; i--) {
+      const paddedNumber = i.toString().padStart(category.digits, '0');
+      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
+      images.push({ src: imagePath, category: category.name });
+    }
   });
+  
+  return images.slice(0, totalImages);
 }
 
 function toggleMenu() {
@@ -372,16 +348,17 @@ function toggleMenu() {
   }
 }
 
-function createGallery(page = 1, images) {
+function createGallery(page = 1) {
   const galleryContainer = document.getElementById('gallery-container');
   galleryContainer.innerHTML = '';
   
+  const allImages = getLatestImages(45);
   const imagesPerPage = 15;
   const startIndex = (page - 1) * imagesPerPage;
   const endIndex = startIndex + imagesPerPage;
-  const pageImages = images.slice(startIndex, endIndex);
+  const images = allImages.slice(startIndex, endIndex);
   
-  pageImages.forEach(image => {
+  images.forEach(image => {
     const galleryItem = document.createElement('div');
     galleryItem.className = 'gallery-item';
 
@@ -414,7 +391,7 @@ function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
     }
     pageLink.onclick = function(e) {
       e.preventDefault();
-      createGallery(i, window.latestImages);
+      createGallery(i);
       createPagination(totalImages, i, imagesPerPage);
       window.scrollTo(0, 0);
     };
@@ -450,12 +427,8 @@ function changeImage(direction) {
 window.onload = function() {
   const totalImages = 45;
   const imagesPerPage = 15;
-  
-  getLatestImages(totalImages).then(images => {
-    window.latestImages = images;
-    createGallery(1, images);
-    createPagination(totalImages, 1, imagesPerPage);
-  });
+  createGallery(1);
+  createPagination(totalImages, 1, imagesPerPage);
 };
 
 document.getElementById('popupImg').onclick = function(event) {
@@ -472,8 +445,7 @@ document.getElementById('nextBtn').onclick = function(event) {
   changeImage(1);
 };
 
-		
-	</script>
+    </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
