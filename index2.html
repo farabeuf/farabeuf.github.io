@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Index Neu 4</strong></p></div>
+            <p><strong>Farabeuf Foto Index Neu 5</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -324,21 +324,19 @@ footer a:hover {
   { name: 'misc', path: 'img/misc/', digits: 3 }
 ];
 
-function getCurrentCategory() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('category');
-}
-
-function getLatestImages(numImages = 3, maxTotal = 21) {
+function getLatestImages(totalImages = 45) {
   let images = [];
+  const imagesPerCategory = Math.ceil(totalImages / categories.length);
+  
   categories.forEach(category => {
-    for (let i = 1; i <= numImages && images.length < maxTotal; i++) {
+    for (let i = 1; i <= imagesPerCategory && images.length < totalImages; i++) {
       const paddedNumber = i.toString().padStart(category.digits, '0');
       const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
       images.push({ src: imagePath, category: category.name });
     }
   });
-  return images;
+  
+  return images.slice(0, totalImages);
 }
 
 function toggleMenu() {
@@ -350,33 +348,16 @@ function toggleMenu() {
   }
 }
 
-function createGallery(page = 1, isHomePage = true, currentCategory = '') {
+function createGallery(page = 1) {
   const galleryContainer = document.getElementById('gallery-container');
   galleryContainer.innerHTML = '';
-
-  let images;
-  if (isHomePage) {
-    images = getLatestImages();
-  } else {
-    const category = categories.find(cat => cat.name === currentCategory);
-    if (!category) {
-      console.error('Categoría no encontrada');
-      galleryContainer.innerHTML = '<p>Categoría no encontrada</p>';
-      return;
-    }
-    
-    const imagesPerPage = 15;
-    const startIndex = (page - 1) * imagesPerPage + 1;
-    const endIndex = startIndex + imagesPerPage - 1;
-    
-    images = [];
-    for (let i = startIndex; i <= endIndex; i++) {
-      const paddedNumber = i.toString().padStart(category.digits, '0');
-      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-      images.push({ src: imagePath, category: category.name });
-    }
-  }
-
+  
+  const allImages = getLatestImages(45);
+  const imagesPerPage = 15;
+  const startIndex = (page - 1) * imagesPerPage;
+  const endIndex = startIndex + imagesPerPage;
+  const images = allImages.slice(startIndex, endIndex);
+  
   images.forEach(image => {
     const galleryItem = document.createElement('div');
     galleryItem.className = 'gallery-item';
@@ -395,34 +376,26 @@ function createGallery(page = 1, isHomePage = true, currentCategory = '') {
   });
 }
 
-function createPagination(totalImages, currentPage = 1) {
+function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
   const paginationContainer = document.getElementById('pagination-container');
   paginationContainer.innerHTML = '';
   paginationContainer.className = 'pagination';
-  const totalPages = Math.ceil(totalImages / 15);
-  const range = 2;
+  const totalPages = Math.ceil(totalImages / imagesPerPage);
 
   for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
-      const pageLink = document.createElement('a');
-      pageLink.href = '#';
-      pageLink.textContent = i;
-      if (i === currentPage) {
-        pageLink.className = 'active';
-      }
-      pageLink.onclick = function(e) {
-        e.preventDefault();
-        createGallery(i, false, getCurrentCategory());
-        createPagination(totalImages, i);
-        window.scrollTo(0, 0);
-      };
-      paginationContainer.appendChild(pageLink);
-    } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
-      const ellipsis = document.createElement('span');
-      ellipsis.textContent = '...';
-      ellipsis.className = 'pagination-ellipsis';
-      paginationContainer.appendChild(ellipsis);
+    const pageLink = document.createElement('a');
+    pageLink.href = '#';
+    pageLink.textContent = i;
+    if (i === currentPage) {
+      pageLink.className = 'active';
     }
+    pageLink.onclick = function(e) {
+      e.preventDefault();
+      createGallery(i);
+      createPagination(totalImages, i, imagesPerPage);
+      window.scrollTo(0, 0);
+    };
+    paginationContainer.appendChild(pageLink);
   }
 }
 
@@ -452,38 +425,10 @@ function changeImage(direction) {
 }
 
 window.onload = function() {
-  const currentCategory = getCurrentCategory();
-  const isHomePage = !currentCategory;
-  let totalImages = isHomePage ? categories.length * 3 : 0;
-  
-  if (!isHomePage) {
-    const category = categories.find(cat => cat.name === currentCategory);
-    if (category) {
-      // Contar imágenes en la categoría (esto es un ejemplo, ajusta según tu estructura)
-      for (let i = 1; i <= 100; i++) { // Asume un máximo de 100 imágenes
-        const paddedNumber = i.toString().padStart(category.digits, '0');
-        const img = new Image();
-        img.src = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-        img.onload = function() {
-          totalImages++;
-          if (i === 1) {
-            createGallery(1, isHomePage, currentCategory);
-            createPagination(totalImages, 1);
-          }
-        };
-        img.onerror = function() {
-          if (i === 1) {
-            createGallery(1, isHomePage, currentCategory);
-            createPagination(totalImages, 1);
-          }
-          return; // Detiene el conteo si no se encuentra la imagen
-        };
-      }
-    }
-  } else {
-    createGallery(1, isHomePage, currentCategory);
-    createPagination(totalImages, 1);
-  }
+  const totalImages = 45;
+  const imagesPerPage = 15;
+  createGallery(1);
+  createPagination(totalImages, 1, imagesPerPage);
 };
 
 document.getElementById('popupImg').onclick = function(event) {
@@ -500,9 +445,6 @@ document.getElementById('nextBtn').onclick = function(event) {
   changeImage(1);
 };
 
-
-		
-		
     </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
