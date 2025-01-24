@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Index Neu 3</strong></p></div>
+            <p><strong>Farabeuf Foto Index Neu 4</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -454,9 +454,36 @@ function changeImage(direction) {
 window.onload = function() {
   const currentCategory = getCurrentCategory();
   const isHomePage = !currentCategory;
-  const totalImages = isHomePage ? categories.length * 3 : 33;
-  createGallery(1, isHomePage, currentCategory);
-  createPagination(totalImages, 1);
+  let totalImages = isHomePage ? categories.length * 3 : 0;
+  
+  if (!isHomePage) {
+    const category = categories.find(cat => cat.name === currentCategory);
+    if (category) {
+      // Contar imágenes en la categoría (esto es un ejemplo, ajusta según tu estructura)
+      for (let i = 1; i <= 100; i++) { // Asume un máximo de 100 imágenes
+        const paddedNumber = i.toString().padStart(category.digits, '0');
+        const img = new Image();
+        img.src = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
+        img.onload = function() {
+          totalImages++;
+          if (i === 1) {
+            createGallery(1, isHomePage, currentCategory);
+            createPagination(totalImages, 1);
+          }
+        };
+        img.onerror = function() {
+          if (i === 1) {
+            createGallery(1, isHomePage, currentCategory);
+            createPagination(totalImages, 1);
+          }
+          return; // Detiene el conteo si no se encuentra la imagen
+        };
+      }
+    }
+  } else {
+    createGallery(1, isHomePage, currentCategory);
+    createPagination(totalImages, 1);
+  }
 };
 
 document.getElementById('popupImg').onclick = function(event) {
@@ -472,6 +499,7 @@ document.getElementById('nextBtn').onclick = function(event) {
   event.stopPropagation();
   changeImage(1);
 };
+
 
 		
 		
