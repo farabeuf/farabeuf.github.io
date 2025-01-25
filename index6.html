@@ -212,146 +212,157 @@
     </div>
 
     <script>
-        const categories = [
-            { name: 'urban', path: 'img/urban/', digits: 2 },
-            { name: 'events', path: 'img/events/', digits: 2 },
-            { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
-            { name: 'nature', path: 'img/nature/', digits: 3 },
-            { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
-            { name: 'streetart', path: 'img/streetart/', digits: 2 },
-            { name: 'misc', path: 'img/misc/', digits: 3 }
-        ];
+const categories = [
+  { name: 'urban', path: 'img/urban/', digits: 2 },
+  { name: 'events', path: 'img/events/', digits: 2 },
+  { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
+  { name: 'nature', path: 'img/nature/', digits: 3 },
+  { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
+  { name: 'streetart', path: 'img/streetart/', digits: 2 },
+  { name: 'misc', path: 'img/misc/', digits: 3 }
+];
 
         function getLatestImages() {
-            let images = [];
-            const imagesPerCategory = 10;
-            
-            categories.forEach(category => {
-                let maxNumber = Math.pow(10, category.digits) - 1;
-                let categoryImages = [];
-                
-                for (let i = maxNumber; i >= 1 && categoryImages.length < imagesPerCategory; i--) {
-                    const paddedNumber = i.toString().padStart(category.digits, '0');
-                    const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-                    categoryImages.push({ src: imagePath, category: category.name });
-                }
-                
-                images = images.concat(categoryImages);
-            });
-            
-            return shuffleArray(images);
-        }
+  let images = [];
+  const imagesPerCategory = 10;
+  
+  categories.forEach(category => {
+    let maxNumber = Math.pow(10, category.digits) - 1;
+    let categoryImages = [];
+    
+    for (let i = maxNumber; i >= 1 && categoryImages.length < imagesPerCategory; i--) {
+      const paddedNumber = i.toString().padStart(category.digits, '0');
+      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
+      categoryImages.push({ src: imagePath, category: category.name });
+    }
+    
+    images = images.concat(categoryImages);
+  });
+  
+  return shuffleArray(images);
+}
+		
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
 
-        function toggleMenu() {
-            var x = document.getElementById("myMenu");
-            if (x.className === "menu") {
-                x.className += " responsive";
-            } else {
-                x.className = "menu";
-            }
-        }
+        // Función para mezclar aleatoriamente un array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+		
+		
 
-        function createGallery(page = 1) {
-            const galleryContainer = document.getElementById('gallery-container');
-            galleryContainer.innerHTML = '';
-            
-            const allImages = getLatestImages();
-            const imagesPerPage = 15;
-            const startIndex = (page - 1) * imagesPerPage;
-            const endIndex = startIndex + imagesPerPage;
-            const images = allImages.slice(startIndex, endIndex);
-            
-            images.forEach(image => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
+        // Función para crear la galería
+function createGallery(page = 1) {
+  const galleryContainer = document.getElementById('gallery-container');
+  galleryContainer.innerHTML = '';
+  
+  const allImages = getLatestImages();
+  const imagesPerPage = 15;
+  const startIndex = (page - 1) * imagesPerPage;
+  const endIndex = startIndex + imagesPerPage;
+  const images = allImages.slice(startIndex, endIndex);
+  
+  images.forEach(image => {
+    const galleryItem = document.createElement('div');
+    galleryItem.className = 'gallery-item';
 
-                const img = document.createElement('img');
-                img.src = image.src;
-                img.alt = `Imagen de ${image.category}`;
-                img.onerror = function() { this.style.display = 'none'; };
-                img.onclick = function() { openPopup(this.src); };
+    const img = document.createElement('img');
+    img.src = image.src;
+    img.alt = `Imagen de ${image.category}`;
+    img.onerror = function() { this.style.display = 'none'; };
+    img.onclick = function() { openPopup(this.src); };
 
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-            });
-        }
+    galleryItem.appendChild(img);
+    galleryContainer.appendChild(galleryItem);
+  });
 
-        function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
-            const paginationContainer = document.getElementById('pagination-container');
-            paginationContainer.innerHTML = '';
-            const totalPages = Math.ceil(totalImages / imagesPerPage);
+  createPagination(allImages.length, page, imagesPerPage);
+}
+		
+		// Función para crear la paginación
+function createPagination(totalImages, currentPage, imagesPerPage) {
+  const paginationContainer = document.getElementById('pagination-container');
+  paginationContainer.innerHTML = '';
+  const totalPages = Math.ceil(totalImages / imagesPerPage);
 
-            for (let i = 1; i <= totalPages; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = '#';
-                pageLink.textContent = i;
-                if (i === currentPage) {
-                    pageLink.className = 'active';
-                }
-                pageLink.onclick = function(e) {
-                    e.preventDefault();
-                    createGallery(i);
-                    createPagination(totalImages, i, imagesPerPage);
-                    window.scrollTo(0, 0);
-                };
-                paginationContainer.appendChild(pageLink);
-            }
-        }
+  for (let i = 1; i <= totalPages; i++) {
+    const pageLink = document.createElement('a');
+    pageLink.href = '#';
+    pageLink.textContent = i;
+    if (i === currentPage) {
+      pageLink.className = 'active';
+    }
+    pageLink.onclick = function(e) {
+      e.preventDefault();
+      createGallery(i);
+      window.scrollTo(0, 0);
+    };
+    paginationContainer.appendChild(pageLink);
+  }
+}
+		
+		
+// Variables para el popup
+let currentIndex = 0;
+let images;
+		
 
-        let currentIndex = 0;
-        let images;
+       // Función para abrir el popup
+function openPopup(src) {
+  const popup = document.getElementById('popup');
+  const popupImg = document.getElementById('popupImg');
+  popup.style.display = 'flex';
+  popupImg.src = src;
+  images = document.querySelectorAll('.gallery-item img');
+  currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
 
-        function openPopup(src) {
-            const popup = document.getElementById('popup');
-            const popupImg = document.getElementById('popupImg');
-            popup.style.display = 'flex';
-            popupImg.src = src;
-            images = document.querySelectorAll('.gallery-item img');
-            currentIndex = Array.from(images).findIndex(img => img.src === src);
-        }
+// Función para cerrar el popup
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
 
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
+// Función para cambiar la imagen en el popup
+function changeImage(direction) {
+  currentIndex += direction;
+  if (currentIndex < 0) currentIndex = images.length - 1;
+  if (currentIndex >= images.length) currentIndex = 0;
+  document.getElementById('popupImg').src = images[currentIndex].src;
+}
 
-        function changeImage(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            if (currentIndex >= images.length) currentIndex = 0;
-            const popupImg = document.getElementById('popupImg');
-            popupImg.src = images[currentIndex].src;
-        }
+// Inicialización de la galería al cargar la página
+window.onload = function() {
+  createGallery(1);
+};
 
-        window.onload = function() {
-            const allImages = getLatestImages();
-            const totalImages = allImages.length;
-            const imagesPerPage = 15;
-            createGallery(1);
-            createPagination(totalImages, 1, imagesPerPage);
-        };
+// Manejadores de eventos para el popup
+document.getElementById('popupImg').onclick = function(event) {
+  event.stopPropagation();
+};
 
-        document.getElementById('popupImg').onclick = function(event) {
-            event.stopPropagation();
-        };
+document.getElementById('prevBtn').onclick = function(event) {
+  event.stopPropagation();
+  changeImage(-1);
+};
 
-        document.getElementById('prevBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(-1);
-        };
+document.getElementById('nextBtn').onclick = function(event) {
+  event.stopPropagation();
+  changeImage(1);
+};
 
-        document.getElementById('nextBtn').onclick = function(event) {
-            event.stopPropagation();
-            changeImage(1);
-        };
+// Función para alternar el menú responsive
+function toggleMenu() {
+  var x = document.getElementById("myMenu");
+  if (x.className === "menu") {
+    x.className += " responsive";
+  } else {
+    x.className = "menu";
+  }
+}
     </script>
 </body>
 </html>
