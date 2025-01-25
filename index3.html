@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home 5</strong></p></div>
+            <p><strong>Farabeuf Foto Home</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -313,6 +313,7 @@ footer a:hover {
     </div>
 </div>
     <script>
+		
 		const categories = [
   { name: 'urban', path: 'img/urban/', digits: 2 },
   { name: 'events', path: 'img/events/', digits: 2 },
@@ -328,17 +329,14 @@ function getLatestImages(totalImages = 45) {
   const imagesPerCategory = Math.ceil(totalImages / categories.length);
   
   categories.forEach(category => {
-    const maxRange = category.digits === 2 ? 99 : 999;
-    
-    for (let i = 1; i <= maxRange && images.length < totalImages; i++) {
+    for (let i = 1; i <= imagesPerCategory && images.length < totalImages; i++) {
       const paddedNumber = i.toString().padStart(category.digits, '0');
       const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
       images.push({ src: imagePath, category: category.name });
     }
   });
   
-  // Invertir el array para obtener las imágenes con números más grandes
-  return images.reverse().slice(0, totalImages);
+  return images.slice(0, totalImages);
 }
 
 function toggleMenu() {

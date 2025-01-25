@@ -6,30 +6,31 @@
     <title>Farabeuf - Fotografía</title>
     <link rel="icon" href="img/web/fbf.ico" type="image/x-icon">
     <style>
+        /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
-			padding-top: 80px; /* Ajusta el espacio superior para que el contenido no quede cubierto por el menú fijo */
+            padding-top: 80px;
         }
 
         header {
             background-color: white;
-    color: #333;
-			
-    padding: 1em; /* Mantén el padding horizontal, elimina el vertical, el original estaba en 1em nada mas */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: fixed; /* Fijar el menú en la parte superior */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
-}
+            color: #333;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+
         .logo-container {
             display: flex;
             align-items: center;
@@ -43,19 +44,19 @@
 
         .menu {
             display: flex;
-    align-items: center;
-    margin-right: 15px; /* Añadir margen a la derecha del menú */
+            align-items: center;
         }
 
-        .menu a, .dropdown > a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-}
-		.menu a:last-child {
-    margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
-}
+        .menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        .menu a:hover {
+            background-color: #f1f1f1;
+        }
 
         .dropdown {
             position: relative;
@@ -66,19 +67,8 @@
             position: absolute;
             background-color: white;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
         }
 
         .dropdown:hover .dropdown-content {
@@ -89,8 +79,10 @@
             display: none;
         }
 
-        @media screen and (max-width : 1024px ){
-            .menu a:not(:first-child), .dropdown {display: none;}
+        @media screen and (max-width: 1024px) {
+            .menu a:not(:first-child), .dropdown {
+                display: none;
+            }
             .menu a.icon {
                 float: right;
                 display: block;
@@ -108,38 +100,36 @@
                 display: block;
                 text-align: left;
             }
-            .menu.responsive .dropdown-content {
-                position: relative;
-            }
         }
 
-        .gallery { /*nuevo formato Grid */
-            display: grid;/*nuevo formato Grid */
-    		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));/*nuevo formato Grid */
-    		gap: 15px;/*nuevo formato Grid */
-    		padding: 20px;/*nuevo formato Grid */
+        /* Galería */
+        #gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            margin-top: 10px;
         }
 
         .gallery-item {
-            overflow: hidden;	/*nuevo formato Grid */   
-			border-radius: 8px;	/*nuevo formato Grid */
-    		aspect-ratio: 1 / 1;/*nuevo formato Grid */
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1 / 1;
         }
 
         .gallery-item img {
-            width: 100%;		/*nuevo formato Grid */
-            height: 100%;		/*nuevo formato Grid */
-			object-fit: cover;	/*nuevo formato Grid */
-    		object-position: center;/*nuevo formato Grid */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             cursor: pointer;
-            transition: transform 0.3s ease;/*nuevo formato Grid */
-			margin: 10px; /* Añade márgenes alrededor de cada imagen en la galería */
+            transition: transform 0.3s ease;
         }
 
         .gallery-item img:hover {
             transform: scale(1.05);
         }
 
+        /* Popup */
         .popup {
             display: none;
             position: fixed;
@@ -156,135 +146,43 @@
         .popup img {
             max-width: 90%;
             max-height: 90%;
-            object-fit: contain;
         }
 
-        .popup button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 16px;
-            font-size: 18px;
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
 
-        #prevBtn {
-            left: 10px;
-        }
-
-        #nextBtn {
-            right: 10px;
-        }
-		footer {
-    padding: 20px 0;
-    text-align: center;
-}
-
-		
-		footer a {
-    color: #333;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: inline-block;
-    margin: 5px;
-}
-
-footer a:hover {
-    background-color: #f1f1f1;
-}
-		#gallery-container {
-    margin-top: 10px; /* Asegura que la galería no quede bajo el menú fijo */
-}
-		
-		.pagination {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 20px;
-			padding: 10px 0;/*nuevo*/
-    }
-
-    .pagination a {
-        color: black;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: background-color .3s;
-        border: 1px solid #ddd;
-        margin: 4px;
-    }
-
-    .pagination a:hover {
-        background-color: #ddd;
-    }
-
-    @media screen and (max-width: 480px) {
         .pagination a {
-            padding: 6px 12px;
-            font-size: 14px;
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
         }
-    }
 
-		
-		
-		/*nuevo*/
-		#gallery-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
-    gap: 10px;
-}
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
 
-.gallery-item {
-    overflow: hidden;
-    border-radius: 8px; /* Opcional, para un diseño más suave */
-}
-
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
-}
-
-	.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination a, .pagination span {
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-}
-
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
-}
-
-.pagination a:hover:not(.active) {
-    background-color: #ddd;
-}
-
-.pagination-ellipsis {
-    padding: 8px 16px;
-}
-
-		
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
-                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home neu 1</strong></p></div>
-          <nav class="menu" id="myMenu">
+                <img src="img/web/display2.jpg" alt="Logo" class="logo">
+            </a>
+            <p><strong>Farabeuf Fotografía4</strong></p>
+        </div>
+        <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
                 <a href="#">Gallery</a>
@@ -295,7 +193,7 @@ footer a:hover {
                     <a href="nature.html">Nature</a>
                     <a href="streetfoto.html">Street Photography</a>
                     <a href="street-art.html">Street Art</a>
-					<a href="misc.html">Misc</a>
+                    <a href="misc.html">Misc</a>
                 </div>
             </div>
             <a href="about.html">About Me</a>
@@ -303,173 +201,97 @@ footer a:hover {
             <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
         </nav>
     </header>
-<div class="content">
-    <div id="gallery-container" class="gallery"></div>
-
-    <div id="popup" class="popup" onclick="closePopup()">
-        <img id="popupImg" src="" alt="Imagen ampliada">
-        <button id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
-        <button id="nextBtn" onclick="changeImage(1)">&#10095;</button>
+    <div class="content">
+        <div id="gallery-container" class="gallery"></div>
+        <div id="popup" class="popup" onclick="closePopup()">
+            <img id="popupImg" src="" alt="Imagen ampliada">
+        </div>
+        <div id="pagination-container" class="pagination"></div>
     </div>
-</div>
     <script>
-// Definición de las categorías de imágenes
-const categories = [
-  { name: 'urban', path: 'img/urban/', digits: 2 },
-  { name: 'events', path: 'img/events/', digits: 2 },
-  { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
-  { name: 'nature', path: 'img/nature/', digits: 3 },
-  { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
-  { name: 'streetart', path: 'img/streetart/', digits: 2 },
-  { name: 'misc', path: 'img/misc/', digits: 3 }
-];
+        const categories = [
+            { name: 'urban', path: 'img/urban/', digits: 2 },
+            { name: 'events', path: 'img/events/', digits: 2 },
+            { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
+            { name: 'nature', path: 'img/nature/', digits: 3 },
+            { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
+            { name: 'streetart', path: 'img/streetart/', digits: 2 },
+            { name: 'misc', path: 'img/misc/', digits: 3 }
+        ];
 
-// Función para obtener las imágenes más recientes
-function getLatestImages(totalImages = 45) {
-  let images = [];
-  const imagesPerCategory = Math.ceil(totalImages / categories.length);
-  
-  categories.forEach(category => {
-    // Obtener el número máximo de imágenes para cada categoría
-    let maxNumber = Math.pow(10, category.digits) - 1;
-    let count = 0;
-    
-    // Iterar desde el número más alto hacia abajo
-    for (let i = maxNumber; i >= 1 && count < imagesPerCategory && images.length < totalImages; i--) {
-      const paddedNumber = i.toString().padStart(category.digits, '0');
-      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-      images.push({ src: imagePath, category: category.name });
-      count++;
-    }
-  });
-  
-  return images.slice(0, totalImages);
-}
+        function getImages(numImages = 50) {
+            const images = [];
+            categories.forEach(category => {
+                for (let i = 1; i <= numImages; i++) {
+                    const paddedNumber = i.toString().padStart(category.digits, '0');
+                    images.push(`${category.path}img_${category.name}_${paddedNumber}.jpg`);
+                }
+            });
+            return images;
+        }
 
-// Función para alternar el menú responsive
-function toggleMenu() {
-  var x = document.getElementById("myMenu");
-  if (x.className === "menu") {
-    x.className += " responsive";
-  } else {
-    x.className = "menu";
-  }
-}
+        function createGallery(page = 1, imagesPerPage = 15) {
+            const galleryContainer = document.getElementById('gallery-container');
+            galleryContainer.innerHTML = '';
 
-// Función para crear la galería de imágenes
-function createGallery(page = 1) {
-  const galleryContainer = document.getElementById('gallery-container');
-  galleryContainer.innerHTML = '';
-  
-  const allImages = getLatestImages(45);
-  const imagesPerPage = 15;
-  const startIndex = (page - 1) * imagesPerPage;
-  const endIndex = startIndex + imagesPerPage;
-  const images = allImages.slice(startIndex, endIndex);
-  
-  images.forEach(image => {
-    const galleryItem = document.createElement('div');
-    galleryItem.className = 'gallery-item';
+            const images = getImages();
+            const startIndex = (page - 1) * imagesPerPage;
+            const endIndex = startIndex + imagesPerPage;
 
-    const img = document.createElement('img');
-    img.src = image.src;
-    img.alt = `Imagen de ${image.category}`;
-    img.onerror = function() { this.style.display = 'none'; };
-    img.onclick = function() { openPopup(this.src); };
-    img.style.objectFit = 'cover';
-    img.style.width = '100%';
-    img.style.height = '100%';
+            images.slice(startIndex, endIndex).forEach(src => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
 
-    galleryItem.appendChild(img);
-    galleryContainer.appendChild(galleryItem);
-  });
-}
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Imagen';
+                img.onerror = () => (img.style.display = 'none');
+                img.onclick = () => openPopup(src);
 
-// Función para crear la paginación
-function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
-  const paginationContainer = document.getElementById('pagination-container');
-  paginationContainer.innerHTML = '';
-  paginationContainer.className = 'pagination';
-  const totalPages = Math.ceil(totalImages / imagesPerPage);
+                galleryItem.appendChild(img);
+                galleryContainer.appendChild(galleryItem);
+            });
 
-  for (let i = 1; i <= totalPages; i++) {
-    const pageLink = document.createElement('a');
-    pageLink.href = '#';
-    pageLink.textContent = i;
-    if (i === currentPage) {
-      pageLink.className = 'active';
-    }
-    pageLink.onclick = function(e) {
-      e.preventDefault();
-      createGallery(i);
-      createPagination(totalImages, i, imagesPerPage);
-      window.scrollTo(0, 0);
-    };
-    paginationContainer.appendChild(pageLink);
-  }
-}
+            createPagination(images.length, page, imagesPerPage);
+        }
 
-let currentIndex = 0;
-let images;
+        function createPagination(totalImages, currentPage, imagesPerPage) {
+            const paginationContainer = document.getElementById('pagination-container');
+            paginationContainer.innerHTML = '';
 
-// Función para abrir el popup con la imagen ampliada
-function openPopup(src) {
-  const popup = document.getElementById('popup');
-  const popupImg = document.getElementById('popupImg');
-  popup.style.display = 'flex';
-  popupImg.src = src;
-  images = document.querySelectorAll('.gallery-item img');
-  currentIndex = Array.from(images).findIndex(img => img.src === src);
-}
+            const totalPages = Math.ceil(totalImages / imagesPerPage);
 
-// Función para cerrar el popup
-function closePopup() {
-  const popup = document.getElementById('popup');
-  popup.style.display = 'none';
-}
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                if (i === currentPage) pageLink.className = 'active';
+                pageLink.onclick = (e) => {
+                    e.preventDefault();
+                    createGallery(i, imagesPerPage);
+                };
+                paginationContainer.appendChild(pageLink);
+            }
+        }
 
-// Función para cambiar la imagen en el popup
-function changeImage(direction) {
-  currentIndex += direction;
-  if (currentIndex < 0) currentIndex = images.length - 1;
-  if (currentIndex >= images.length) currentIndex = 0;
-  const popupImg = document.getElementById('popupImg');
-  popupImg.src = images[currentIndex].src;
-}
+        function openPopup(src) {
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = src;
+            popup.style.display = 'flex';
+        }
 
-// Inicialización de la galería al cargar la página
-window.onload = function() {
-  const totalImages = 45;
-  const imagesPerPage = 15;
-  createGallery(1);
-  createPagination(totalImages, 1, imagesPerPage);
-};
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
 
-// Evitar que el clic en la imagen del popup lo cierre
-document.getElementById('popupImg').onclick = function(event) {
-  event.stopPropagation();
-};
+        function toggleMenu() {
+            const menu = document.getElementById('myMenu');
+            menu.classList.toggle('responsive');
+        }
 
-// Manejadores de eventos para los botones de navegación del popup
-document.getElementById('prevBtn').onclick = function(event) {
-  event.stopPropagation();
-  changeImage(-1);
-};
-
-document.getElementById('nextBtn').onclick = function(event) {
-  event.stopPropagation();
-  changeImage(1);
-};
-</script>
-
-    <script type="text/javascript">
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
+        createGallery();
     </script>
-	<div id="pagination-container"></div> 
-		<footer>
-    © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
-	</footer>
 </body>
 </html>
