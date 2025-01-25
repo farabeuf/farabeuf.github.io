@@ -328,7 +328,7 @@ const categories = [
 function getLatestImages(totalImages = 70) {
   let images = [];
   const imagesPerCategory = 10;
-  }
+  
   categories.forEach(category => {
     let categoryImages = [];
     for (let i = Math.pow(10, category.digits) - 1; i >= 1 && categoryImages.length < imagesPerCategory; i--) {
