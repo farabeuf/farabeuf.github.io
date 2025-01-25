@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home 72test</strong></p></div>
+            <p><strong>Farabeuf Foto Home 74test</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -377,7 +377,7 @@ function createGallery(page = 1) {
     img.alt = `Imagen de ${image.category}`;
     img.onerror = function() {
       this.onerror = null; // Previene bucles infinitos
-      this.src = 'https://www.farabeuf.com/img/web/placeholder-image.jpg'; // Reemplaza con una imagen de placeholder
+      this.src = 'img/web/placeholder-image.jpg'; // Reemplaza con una imagen de placeholder
       console.log(`Error loading image: ${image.src}`);
     };
     img.onload = function() {
