@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home test</strong></p></div>
+            <p><strong>Farabeuf Foto Home 70test</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -325,13 +325,12 @@ const categories = [
 ];
 
 // Función para obtener las últimas imágenes de cada categoría
-function getLatestImages(totalImages = 70) { // Aumentamos a 70 para tener 10 por categoría
+function getLatestImages(totalImages = 70) {
   let images = [];
-  const imagesPerCategory = 10; // Fijamos a 10 imágenes por categoría
+  const imagesPerCategory = 10;
   
   categories.forEach(category => {
     let categoryImages = [];
-    // Empezamos desde 999 (o 99 para categorías con 2 dígitos) y vamos descendiendo
     for (let i = Math.pow(10, category.digits) - 1; i >= 1 && categoryImages.length < imagesPerCategory; i--) {
       const paddedNumber = i.toString().padStart(category.digits, '0');
       const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
@@ -349,7 +348,6 @@ function getLatestImages(totalImages = 70) { // Aumentamos a 70 para tener 10 po
   return images.slice(0, totalImages);
 }
 
-// Función para alternar la visibilidad del menú en dispositivos móviles
 function toggleMenu() {
   var x = document.getElementById("myMenu");
   if (x.className === "menu") {
@@ -364,7 +362,7 @@ function createGallery(page = 1) {
   const galleryContainer = document.getElementById('gallery-container');
   galleryContainer.innerHTML = '';
   
-  const allImages = getLatestImages(70); // Obtenemos 70 imágenes en total
+  const allImages = getLatestImages(70);
   const imagesPerPage = 15;
   const startIndex = (page - 1) * imagesPerPage;
   const endIndex = startIndex + imagesPerPage;
@@ -377,16 +375,25 @@ function createGallery(page = 1) {
     const img = document.createElement('img');
     img.src = image.src;
     img.alt = `Imagen de ${image.category}`;
-    img.onerror = function() { this.style.display = 'none'; };
+    img.onerror = function() {
+      this.onerror = null; // Previene bucles infinitos
+      this.src = 'path/to/placeholder-image.jpg'; // Reemplaza con una imagen de placeholder
+      console.log(`Error loading image: ${image.src}`);
+    };
+    img.onload = function() {
+      galleryItem.style.display = 'block'; // Muestra la imagen cuando se carga correctamente
+    };
     img.onclick = function() { openPopup(this.src); };
     img.style.objectFit = 'cover';
     img.style.width = '100%';
     img.style.height = '100%';
 
+    galleryItem.style.display = 'none'; // Oculta el item inicialmente
     galleryItem.appendChild(img);
     galleryContainer.appendChild(galleryItem);
   });
 }
+
 
 // Función para crear la paginación
 function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
@@ -442,7 +449,7 @@ function changeImage(direction) {
 
 // Inicialización de la galería al cargar la página
 window.onload = function() {
-  const totalImages = 70; // Cambiamos a 70 imágenes en total
+  const totalImages = 70;
   const imagesPerPage = 15;
   createGallery(1);
   createPagination(totalImages, 1, imagesPerPage);
