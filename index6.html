@@ -6,7 +6,7 @@
     <title>Farabeuf - Fotografía</title>
     <link rel="icon" href="img/web/fbf.ico" type="image/x-icon">
     <style>
-         body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -281,10 +281,10 @@ footer a:hover {
 <body>
     <header>
         <div class="logo-container">
-            <a href="index.html"><img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home 6</strong></p>
-        </div>
-        <nav class="menu" id="myMenu">
+            <a href="index.html">
+                <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
+            <p><strong>Farabeuf Foto Home test</strong></p></div>
+          <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
                 <a href="#">Gallery</a>
@@ -295,7 +295,7 @@ footer a:hover {
                     <a href="nature.html">Nature</a>
                     <a href="streetfoto.html">Street Photography</a>
                     <a href="street-art.html">Street Art</a>
-                    <a href="misc.html">Misc</a>
+					<a href="misc.html">Misc</a>
                 </div>
             </div>
             <a href="about.html">About Me</a>
@@ -303,111 +303,177 @@ footer a:hover {
             <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
         </nav>
     </header>
-    <div class="content">
-        <div id="gallery-container" class="gallery"></div>
-        <div id="popup" class="popup" onclick="closePopup()">
-            <img id="popupImg" src="" alt="Imagen ampliada">
-            <button id="prevBtn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-            <button id="nextBtn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
-        </div>
-        <div id="pagination-container"></div> <!-- Contenedor de la paginación -->
+<div class="content">
+    <div id="gallery-container" class="gallery"></div>
+
+    <div id="popup" class="popup" onclick="closePopup()">
+        <img id="popupImg" src="" alt="Imagen ampliada">
+        <button id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
+        <button id="nextBtn" onclick="changeImage(1)">&#10095;</button>
     </div>
+</div>
     <script>
-        const categories = [
-            { name: 'urban', path: 'img/urban/', digits: 2 },
-            { name: 'events', path: 'img/events/', digits: 2 },
-            { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
-            { name: 'nature', path: 'img/nature/', digits: 3 },
-            { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
-            { name: 'streetart', path: 'img/streetart/', digits: 2 },
-            { name: 'misc', path: 'img/misc/', digits: 3 }
-        ];
+// Definición de las categorías de imágenes
+const categories = [
+  { name: 'urban', path: 'img/urban/', digits: 2 },
+  { name: 'events', path: 'img/events/', digits: 2 },
+  { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
+  { name: 'nature', path: 'img/nature/', digits: 3 },
+  { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
+  { name: 'streetart', path: 'img/streetart/', digits: 2 },
+  { name: 'misc', path: 'img/misc/', digits: 3 }
+];
 
-        function getLatestImages(totalImages = 45) {
-            let images = [];
-            const imagesPerCategory = Math.ceil(totalImages / categories.length);
+// Función para obtener las últimas imágenes de cada categoría
+function getLatestImages(totalImages = 70) { // Aumentamos a 70 para tener 10 por categoría
+  let images = [];
+  const imagesPerCategory = 10; // Fijamos a 10 imágenes por categoría
+  
+  categories.forEach(category => {
+    let categoryImages = [];
+    // Empezamos desde 999 (o 99 para categorías con 2 dígitos) y vamos descendiendo
+    for (let i = Math.pow(10, category.digits) - 1; i >= 1 && categoryImages.length < imagesPerCategory; i--) {
+      const paddedNumber = i.toString().padStart(category.digits, '0');
+      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
+      categoryImages.push({ src: imagePath, category: category.name });
+    }
+    images = images.concat(categoryImages);
+  });
+  
+  // Mezclamos las imágenes aleatoriamente
+  for (let i = images.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [images[i], images[j]] = [images[j], images[i]];
+  }
+  
+  return images.slice(0, totalImages);
+}
 
-            categories.forEach(category => {
-                for (let i = 1; i <= imagesPerCategory && images.length < totalImages; i++) {
-                    const paddedNumber = i.toString().padStart(category.digits, '0');
-                    const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-                    images.push({ src: imagePath, category: category.name });
-                }
-            });
+// Función para alternar la visibilidad del menú en dispositivos móviles
+function toggleMenu() {
+  var x = document.getElementById("myMenu");
+  if (x.className === "menu") {
+    x.className += " responsive";
+  } else {
+    x.className = "menu";
+  }
+}
 
-            return images.slice(0, totalImages);
-        }
+// Función para crear la galería de imágenes
+function createGallery(page = 1) {
+  const galleryContainer = document.getElementById('gallery-container');
+  galleryContainer.innerHTML = '';
+  
+  const allImages = getLatestImages(70); // Obtenemos 70 imágenes en total
+  const imagesPerPage = 15;
+  const startIndex = (page - 1) * imagesPerPage;
+  const endIndex = startIndex + imagesPerPage;
+  const images = allImages.slice(startIndex, endIndex);
+  
+  images.forEach(image => {
+    const galleryItem = document.createElement('div');
+    galleryItem.className = 'gallery-item';
 
-        function toggleMenu() {
-            const x = document.getElementById("myMenu");
-            x.className = x.className === "menu" ? "menu responsive" : "menu";
-        }
+    const img = document.createElement('img');
+    img.src = image.src;
+    img.alt = `Imagen de ${image.category}`;
+    img.onerror = function() { this.style.display = 'none'; };
+    img.onclick = function() { openPopup(this.src); };
+    img.style.objectFit = 'cover';
+    img.style.width = '100%';
+    img.style.height = '100%';
 
-        function createGallery(page = 1) {
-            const galleryContainer = document.getElementById('gallery-container');
-            galleryContainer.innerHTML = '';
+    galleryItem.appendChild(img);
+    galleryContainer.appendChild(galleryItem);
+  });
+}
 
-            const allImages = getLatestImages(45);
-            const imagesPerPage = 15;
-            const startIndex = (page - 1) * imagesPerPage;
-            const endIndex = startIndex + imagesPerPage;
-            const images = allImages.slice(startIndex, endIndex);
+// Función para crear la paginación
+function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
+  const paginationContainer = document.getElementById('pagination-container');
+  paginationContainer.innerHTML = '';
+  paginationContainer.className = 'pagination';
+  const totalPages = Math.ceil(totalImages / imagesPerPage);
 
-            images.forEach(image => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
+  for (let i = 1; i <= totalPages; i++) {
+    const pageLink = document.createElement('a');
+    pageLink.href = '#';
+    pageLink.textContent = i;
+    if (i === currentPage) {
+      pageLink.className = 'active';
+    }
+    pageLink.onclick = function(e) {
+      e.preventDefault();
+      createGallery(i);
+      createPagination(totalImages, i, imagesPerPage);
+      window.scrollTo(0, 0);
+    };
+    paginationContainer.appendChild(pageLink);
+  }
+}
 
-                const img = document.createElement('img');
-                img.src = image.src;
-                img.alt = `Imagen de ${image.category}`;
-                img.onerror = function () { this.style.display = 'none'; };
-                img.onclick = function () { openPopup(this.src); };
+let currentIndex = 0;
+let images;
 
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-            });
-        }
+// Función para abrir el popup con la imagen ampliada
+function openPopup(src) {
+  const popup = document.getElementById('popup');
+  const popupImg = document.getElementById('popupImg');
+  popup.style.display = 'flex';
+  popupImg.src = src;
+  images = document.querySelectorAll('.gallery-item img');
+  currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
 
-        function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
-            const paginationContainer = document.getElementById('pagination-container');
-            paginationContainer.innerHTML = '';
-            const totalPages = Math.ceil(totalImages / imagesPerPage);
+// Función para cerrar el popup
+function closePopup() {
+  const popup = document.getElementById('popup');
+  popup.style.display = 'none';
+}
 
-            for (let i = 1; i <= totalPages; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = '#';
-                pageLink.textContent = i;
-                pageLink.className = i === currentPage ? 'active' : '';
-                pageLink.onclick = function (e) {
-                    e.preventDefault();
-                    createGallery(i);
-                    createPagination(totalImages, i, imagesPerPage);
-                    window.scrollTo(0, 0);
-                };
-                paginationContainer.appendChild(pageLink);
-            }
-        }
+// Función para cambiar la imagen en el popup
+function changeImage(direction) {
+  currentIndex += direction;
+  if (currentIndex < 0) currentIndex = images.length - 1;
+  if (currentIndex >= images.length) currentIndex = 0;
+  const popupImg = document.getElementById('popupImg');
+  popupImg.src = images[currentIndex].src;
+}
 
-        function openPopup(src) {
-            const popup = document.getElementById('popup');
-            const popupImg = document.getElementById('popupImg');
-            popupImg.src = src;
-            popup.style.display = 'flex';
-        }
+// Inicialización de la galería al cargar la página
+window.onload = function() {
+  const totalImages = 70; // Cambiamos a 70 imágenes en total
+  const imagesPerPage = 15;
+  createGallery(1);
+  createPagination(totalImages, 1, imagesPerPage);
+};
 
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
+// Evitar que el clic en la imagen del popup se propague
+document.getElementById('popupImg').onclick = function(event) {
+  event.stopPropagation();
+};
 
-        function changeImage(direction) {
-            // Implementación de navegación entre imágenes
-        }
+// Manejadores de eventos para los botones de navegación en el popup
+document.getElementById('prevBtn').onclick = function(event) {
+  event.stopPropagation();
+  changeImage(-1);
+};
 
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', () => {
-            createGallery(1);
-            createPagination(45, 1);
-        });
+document.getElementById('nextBtn').onclick = function(event) {
+  event.stopPropagation();
+  changeImage(1);
+};
+
+</script>
+
+    <script type="text/javascript">
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
     </script>
+	<div id="pagination-container"></div> 
+		<footer>
+    © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
+	</footer>
 </body>
 </html>
