@@ -377,7 +377,7 @@ function createGallery(page = 1) {
     img.alt = `Imagen de ${image.category}`;
     img.onerror = function() {
       this.onerror = null; // Previene bucles infinitos
-      this.src = 'path/to/placeholder-image.jpg'; // Reemplaza con una imagen de placeholder
+      this.src = 'img/web/placeholder-image.jpg'; // Reemplaza con una imagen de placeholder
       console.log(`Error loading image: ${image.src}`);
     };
     img.onload = function() {
