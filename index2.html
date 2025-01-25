@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home 250125</strong></p></div>
+            <p><strong>Farabeuf Foto Home 125</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -453,6 +453,11 @@ footer a:hover {
     event.stopPropagation();
     changeImage(1);
   };
+		
+		document.addEventListener('DOMContentLoaded', () => {
+    createGallery(); // Crear la galería al cargar la página
+});
+		
 </script>
 
     <script type="text/javascript">
