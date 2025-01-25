@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home 125</strong></p></div>
+            <p><strong>Farabeuf Foto Home dd125</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -303,6 +303,7 @@ footer a:hover {
             <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
         </nav>
     </header>
+	<div id="pagination-container"></div>
 <div class="content">
     <div id="gallery-container" class="gallery"></div>
 
@@ -313,6 +314,8 @@ footer a:hover {
     </div>
 </div>
     <script>
+		console.log(`Intentando cargar imagen: ${imagePath}`);
+		
   const categories = [
     { name: 'urban', path: 'img/urban/', digits: 2 },
     { name: 'events', path: 'img/events/', digits: 2 },
@@ -469,5 +472,6 @@ footer a:hover {
 		<footer>
     © 2025<a href="impressum.html"> Impressum</a> - <a href="datenschutz.html">Datenschutzerklärung</a>
 	</footer>
+	
 </body>
 </html>
