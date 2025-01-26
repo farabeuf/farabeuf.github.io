@@ -283,7 +283,7 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home</strong></p></div>
+            <p><strong>Farabeuf Foto</strong></p></div>
           <nav class="menu" id="myMenu">
             <a href="index.html">Home</a>
             <div class="dropdown">
@@ -313,138 +313,172 @@ footer a:hover {
     </div>
 </div>
     <script>
-		
-		const categories = [
-  { name: 'urban', path: 'img/urban/', digits: 2 },
-  { name: 'events', path: 'img/events/', digits: 2 },
-  { name: 'landscapes', path: 'img/landscapes/', digits: 2 },
-  { name: 'nature', path: 'img/nature/', digits: 3 },
-  { name: 'streetfoto', path: 'img/streetfoto/', digits: 3 },
-  { name: 'streetart', path: 'img/streetart/', digits: 2 },
-  { name: 'misc', path: 'img/misc/', digits: 3 }
-];
-
-function getLatestImages(totalImages = 45) {
-  let images = [];
-  const imagesPerCategory = Math.ceil(totalImages / categories.length);
-  
-  categories.forEach(category => {
-    for (let i = 1; i <= imagesPerCategory && images.length < totalImages; i++) {
-      const paddedNumber = i.toString().padStart(category.digits, '0');
-      const imagePath = `${category.path}img_${category.name}_${paddedNumber}.jpg`;
-      images.push({ src: imagePath, category: category.name });
-    }
-  });
-  
-  return images.slice(0, totalImages);
-}
-
 function toggleMenu() {
-  var x = document.getElementById("myMenu");
-  if (x.className === "menu") {
-    x.className += " responsive";
-  } else {
-    x.className = "menu";
-  }
+    var x = document.getElementById("myMenu");
+    if (x.className === "menu") {
+        x.className += " responsive";
+    } else {
+        x.className = "menu";
+    }
 }
 
 function createGallery(page = 1) {
-  const galleryContainer = document.getElementById('gallery-container');
-  galleryContainer.innerHTML = '';
-  
-  const allImages = getLatestImages(45);
-  const imagesPerPage = 15;
-  const startIndex = (page - 1) * imagesPerPage;
-  const endIndex = startIndex + imagesPerPage;
-  const images = allImages.slice(startIndex, endIndex);
-  
-  images.forEach(image => {
-    const galleryItem = document.createElement('div');
-    galleryItem.className = 'gallery-item';
+    const galleryContainer = document.getElementById('gallery-container');
+    const basePath = 'img/chidas/';
+    const imagesPerPage = 15;
+    const startIndex = (page - 1) * imagesPerPage + 1;
+    const endIndex = startIndex + imagesPerPage - 1;
 
-    const img = document.createElement('img');
-    img.src = image.src;
-    img.alt = `Imagen de ${image.category}`;
-    img.onerror = function() { this.style.display = 'none'; };
-    img.onclick = function() { openPopup(this.src); };
-    img.style.objectFit = 'cover';
-    img.style.width = '100%';
-    img.style.height = '100%';
+    galleryContainer.innerHTML = '';
 
-    galleryItem.appendChild(img);
-    galleryContainer.appendChild(galleryItem);
-  });
+    for (let i = startIndex; i <= endIndex; i++) {
+        const paddedNumber = i.toString().padStart(2, '0');//cuantos digitos tiene el nombre del archivo 2 o 3
+        const imagePath = `${basePath}img_chidas_${paddedNumber}.jpg`;
+
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = `Imagen ${i}`;
+        img.onerror = function() { this.style.display = 'none'; };
+        img.onclick = function() { openPopup(this.src); };
+				img.style.objectFit = 'cover'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.width = '100%'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.height = '100%';// Cambio para ver las imagenes del mismo tamaño
+
+        galleryItem.appendChild(img);
+        galleryContainer.appendChild(galleryItem);
+    }
 }
 
-function createPagination(totalImages, currentPage = 1, imagesPerPage = 15) {
-  const paginationContainer = document.getElementById('pagination-container');
-  paginationContainer.innerHTML = '';
-  paginationContainer.className = 'pagination';
-  const totalPages = Math.ceil(totalImages / imagesPerPage);
+function createPagination(totalImages, currentPage = 1) {
+    const paginationContainer = document.getElementById('pagination-container');
+    paginationContainer.innerHTML = '';
+    paginationContainer.className = 'pagination';
+    const totalPages = Math.ceil(totalImages / 15);
+    const range = 2;
 
-  for (let i = 1; i <= totalPages; i++) {
-    const pageLink = document.createElement('a');
-    pageLink.href = '#';
-    pageLink.textContent = i;
-    if (i === currentPage) {
-      pageLink.className = 'active';
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            if (i === currentPage) {
+                pageLink.className = 'active';
+            }
+            pageLink.onclick = function(e) {
+                e.preventDefault();
+                createGallery(i);
+                createPagination(totalImages, i);
+                window.scrollTo(0, 0);
+            };
+            paginationContainer.appendChild(pageLink);
+        } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+            const ellipsis = document.createElement('span');
+            ellipsis.textContent = '...';
+            ellipsis.className = 'pagination-ellipsis';
+            paginationContainer.appendChild(ellipsis);
+        }
     }
-    pageLink.onclick = function(e) {
-      e.preventDefault();
-      createGallery(i);
-      createPagination(totalImages, i, imagesPerPage);
-      window.scrollTo(0, 0);
-    };
-    paginationContainer.appendChild(pageLink);
-  }
 }
 
 let currentIndex = 0;
 let images;
 
 function openPopup(src) {
-  const popup = document.getElementById('popup');
-  const popupImg = document.getElementById('popupImg');
-  popup.style.display = 'flex';
-  popupImg.src = src;
-  images = document.querySelectorAll('.gallery-item img');
-  currentIndex = Array.from(images).findIndex(img => img.src === src);
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
 }
 
 function closePopup() {
-  const popup = document.getElementById('popup');
-  popup.style.display = 'none';
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
 }
 
 function changeImage(direction) {
-  currentIndex += direction;
-  if (currentIndex < 0) currentIndex = images.length - 1;
-  if (currentIndex >= images.length) currentIndex = 0;
-  const popupImg = document.getElementById('popupImg');
-  popupImg.src = images[currentIndex].src;
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
 }
 
 window.onload = function() {
-  const totalImages = 45;
-  const imagesPerPage = 15;
-  createGallery(1);
-  createPagination(totalImages, 1, imagesPerPage);
+	// Numero de imagines a mostrar en la galería
+    const totalImages = 33;
+    createGallery(1);
+    createPagination(totalImages, 1);
 };
 
 document.getElementById('popupImg').onclick = function(event) {
-  event.stopPropagation();
+    event.stopPropagation();
 };
 
 document.getElementById('prevBtn').onclick = function(event) {
-  event.stopPropagation();
-  changeImage(-1);
+    event.stopPropagation();
+    changeImage(-1);
 };
 
 document.getElementById('nextBtn').onclick = function(event) {
-  event.stopPropagation();
-  changeImage(1);
+    event.stopPropagation();
+    changeImage(1);
 };
 
+		
+
+function openPopup(src) {
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    popup.style.display = 'flex';
+    popupImg.src = src;
+    images = document.querySelectorAll('.gallery-item img');
+    currentIndex = Array.from(images).findIndex(img => img.src === src);
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    const popupImg = document.getElementById('popupImg');
+    popupImg.src = images[currentIndex].src;
+}
+
+window.onload = function() {
+    const totalImages = 33; // Ajusta este número al total real de imágenes
+    createGallery(1);
+    createPagination(totalImages, 1);
+};
+
+// Evitar que el clic en la imagen cierre el popup
+document.getElementById('popupImg').onclick = function(event) {
+    event.stopPropagation();
+};
+
+// Evitar que el clic en los botones cierre el popup
+document.getElementById('prevBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(-1);
+};
+
+document.getElementById('nextBtn').onclick = function(event) {
+    event.stopPropagation();
+    changeImage(1);
+};
+
+		
+		
+		
+		
     </script>
     <script type="text/javascript">
     document.addEventListener('contextmenu', function(e) {
