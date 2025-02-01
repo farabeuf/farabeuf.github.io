@@ -415,6 +415,12 @@
     }
 }
 
+		// Navegación con teclado en el popup
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') changeImage(-1); // Flecha izquierda: imagen anterior
+    if (e.key === 'ArrowRight') changeImage(1); // Flecha derecha: siguiente imagen
+    if (e.key === 'Escape') closePopup(); // Tecla Escape: cerrar popup
+});
         // Inicializar la galería y la paginación al cargar la página
         window.onload = function() {
             const totalImages = 33; // Ajusta este número al total real de imágenes
