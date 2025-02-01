@@ -296,6 +296,62 @@
 let currentIndex = 0;
 let images = [];
 
+		        // Función para abrir el popup y mostrar la imagen seleccionada
+
+		function openPopup(src) {
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popupImg');
+            popup.style.display = 'flex'; // Mostrar el popup
+            popupImg.src = src; // Establecer la imagen en el popup
+
+            // Obtener todas las imágenes de la galería
+            images = Array.from(document.querySelectorAll('.gallery-item img'));
+            // Encontrar el índice de la imagen actual
+            currentIndex = images.findIndex(img => img.src === src);
+        }
+
+        // Función para cerrar el popup
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none'; // Ocultar el popup
+        }
+
+        // Función para cambiar la imagen en el popup
+        function changeImage(direction) {
+            currentIndex += direction; // Cambiar el índice según la dirección (1 o -1)
+
+            // Asegurarse de que el índice esté dentro del rango de imágenes
+            if (currentIndex < 0) currentIndex = images.length - 1; // Si es menor que 0, ir a la última imagen
+            if (currentIndex >= images.length) currentIndex = 0; // Si es mayor que el total, ir a la primera imagen
+
+            // Actualizar la imagen en el popup
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = images[currentIndex].src;
+        }
+
+        // Navegación con teclado en el popup
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeImage(-1); // Flecha izquierda: imagen anterior
+            if (e.key === 'ArrowRight') changeImage(1); // Flecha derecha: siguiente imagen
+            if (e.key === 'Escape') closePopup(); // Tecla Escape: cerrar popup
+        });
+
+        // Evitar que el clic en la imagen cierre el popup
+        document.getElementById('popupImg').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+        };
+
+        // Evitar que el clic en los botones cierre el popup
+        document.getElementById('prevBtn').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+            changeImage(-1); // Ir a la imagen anterior
+        };
+
+        document.getElementById('nextBtn').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+            changeImage(1); // Ir a la siguiente imagen
+        };
+
 // Función para obtener el número total de imágenes en una categoría
 function getTotalImages() {
     // Supongamos que las imágenes están en la carpeta "img/chidas/" y siguen el formato "img_chidas_XX.jpg"
