@@ -240,7 +240,7 @@
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo">
             </a>
-            <p><strong>Farabeuf Foto Home 03</strong></p>
+            <p><strong>Farabeuf Foto Home 04</strong></p>
         </div>
         <nav class="menu" id="myMenu" aria-label="Menú principal">
             <a href="index.html" aria-current="page">Home</a>
@@ -292,7 +292,66 @@
             }
         }
 
-        // Cargar galería dinámica
+        // Variables globales para el popup
+        let currentIndex = 0;
+        let images = [];
+
+        // Función para abrir el popup y mostrar la imagen seleccionada
+        function openPopup(src) {
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popupImg');
+            popup.style.display = 'flex'; // Mostrar el popup
+            popupImg.src = src; // Establecer la imagen en el popup
+
+            // Obtener todas las imágenes de la galería
+            images = Array.from(document.querySelectorAll('.gallery-item img'));
+            // Encontrar el índice de la imagen actual
+            currentIndex = images.findIndex(img => img.src === src);
+        }
+
+        // Función para cerrar el popup
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none'; // Ocultar el popup
+        }
+
+        // Función para cambiar la imagen en el popup
+        function changeImage(direction) {
+            currentIndex += direction; // Cambiar el índice según la dirección (1 o -1)
+
+            // Asegurarse de que el índice esté dentro del rango de imágenes
+            if (currentIndex < 0) currentIndex = images.length - 1; // Si es menor que 0, ir a la última imagen
+            if (currentIndex >= images.length) currentIndex = 0; // Si es mayor que el total, ir a la primera imagen
+
+            // Actualizar la imagen en el popup
+            const popupImg = document.getElementById('popupImg');
+            popupImg.src = images[currentIndex].src;
+        }
+
+        // Navegación con teclado en el popup
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeImage(-1); // Flecha izquierda: imagen anterior
+            if (e.key === 'ArrowRight') changeImage(1); // Flecha derecha: siguiente imagen
+            if (e.key === 'Escape') closePopup(); // Tecla Escape: cerrar popup
+        });
+
+        // Evitar que el clic en la imagen cierre el popup
+        document.getElementById('popupImg').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+        };
+
+        // Evitar que el clic en los botones cierre el popup
+        document.getElementById('prevBtn').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+            changeImage(-1); // Ir a la imagen anterior
+        };
+
+        document.getElementById('nextBtn').onclick = function(event) {
+            event.stopPropagation(); // Detener la propagación del evento
+            changeImage(1); // Ir a la siguiente imagen
+        };
+
+        // Función para crear la galería dinámica
         function createGallery(page = 1) {
             const galleryContainer = document.getElementById('gallery-container');
             const basePath = 'img/chidas/';
@@ -300,10 +359,10 @@
             const startIndex = (page - 1) * imagesPerPage + 1;
             const endIndex = startIndex + imagesPerPage - 1;
 
-            galleryContainer.innerHTML = '';
+            galleryContainer.innerHTML = ''; // Limpiar la galería antes de agregar nuevas imágenes
 
             for (let i = startIndex; i <= endIndex; i++) {
-                const paddedNumber = i.toString().padStart(2, '0');
+                const paddedNumber = i.toString().padStart(2, '0'); // Formatear el número con 2 dígitos
                 const imagePath = `${basePath}img_chidas_${paddedNumber}.jpg`;
 
                 const galleryItem = document.createElement('div');
@@ -314,22 +373,22 @@
                 img.alt = `Imagen ${i}`;
                 img.loading = 'lazy'; // Lazy loading para mejorar el rendimiento
                 img.onerror = function() {
-                    this.style.display = 'none';
-                    this.parentElement.style.display = 'none'; // Oculta el contenedor si la imagen no se carga
+                    this.style.display = 'none'; // Ocultar la imagen si no se carga
+                    this.parentElement.style.display = 'none'; // Ocultar el contenedor si la imagen no se carga
                 };
-                img.onclick = function() { openPopup(this.src); };
+                img.onclick = function() { openPopup(this.src); }; // Abrir popup al hacer clic
 
                 galleryItem.appendChild(img);
                 galleryContainer.appendChild(galleryItem);
             }
         }
 
-        // Crear paginación
+        // Función para crear la paginación
         function createPagination(totalImages, currentPage = 1) {
             const paginationContainer = document.getElementById('pagination-container');
-            paginationContainer.innerHTML = '';
+            paginationContainer.innerHTML = ''; // Limpiar la paginación antes de agregar nuevos enlaces
             const totalPages = Math.ceil(totalImages / 15);
-            const range = 2;
+            const range = 2; // Rango de páginas a mostrar alrededor de la página actual
 
             for (let i = 1; i <= totalPages; i++) {
                 if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
@@ -337,13 +396,13 @@
                     pageLink.href = '#';
                     pageLink.textContent = i;
                     if (i === currentPage) {
-                        pageLink.className = 'active';
+                        pageLink.className = 'active'; // Resaltar la página actual
                     }
                     pageLink.onclick = function(e) {
                         e.preventDefault();
-                        createGallery(i);
-                        createPagination(totalImages, i);
-                        window.scrollTo(0, 0);
+                        createGallery(i); // Crear la galería para la página seleccionada
+                        createPagination(totalImages, i); // Actualizar la paginación
+                        window.scrollTo(0, 0); // Desplazarse al inicio de la página
                     };
                     paginationContainer.appendChild(pageLink);
                 } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
@@ -355,71 +414,12 @@
             }
         }
 
-        // Funcionalidad del popup
-let currentIndex = 0;
-let images = [];
-
-function openPopup(src) {
-    const popup = document.getElementById('popup');
-    const popupImg = document.getElementById('popupImg');
-    popup.style.display = 'flex';
-    popupImg.src = src;
-
-    // Obtener todas las imágenes de la galería
-    images = Array.from(document.querySelectorAll('.gallery-item img'));
-    currentIndex = images.findIndex(img => img.src === src);
-}
-		
-
-        // Cerrar popup
-function closePopup() {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'none';
-}
-		
-
-        // Cambiar imagen en el popup
-function changeImage(direction) {
-    currentIndex += direction;
-
-    // Asegurarse de que el índice esté dentro del rango de imágenes
-    if (currentIndex < 0) currentIndex = images.length - 1;
-    if (currentIndex >= images.length) currentIndex = 0;
-
-    // Actualizar la imagen en el popup
-    const popupImg = document.getElementById('popupImg');
-    popupImg.src = images[currentIndex].src;
-}
-		
-        // Navegación con teclado en el popup
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') changeImage(-1);
-            if (e.key === 'ArrowRight') changeImage(1);
-            if (e.key === 'Escape') closePopup();
-        });
-
-        // Navegación con teclado en el popup
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') changeImage(-1); // Flecha izquierda
-    if (e.key === 'ArrowRight') changeImage(1); // Flecha derecha
-    if (e.key === 'Escape') closePopup(); // Tecla Escape
-});
-
-// Evitar que el clic en la imagen cierre el popup
-document.getElementById('popupImg').onclick = function(event) {
-    event.stopPropagation();
-};
-
-// Evitar que el clic en los botones cierre el popup
-document.getElementById('prevBtn').onclick = function(event) {
-    event.stopPropagation(); // Detener la propagación del evento
-    changeImage(-1); // Ir a la imagen anterior
-};
-
-document.getElementById('nextBtn').onclick = function(event) {
-    event.stopPropagation(); // Detener la propagación del evento
-    changeImage(1); // Ir a la siguiente imagen
-};
+        // Inicializar la galería y la paginación al cargar la página
+        window.onload = function() {
+            const totalImages = 33; // Ajusta este número al total real de imágenes
+            createGallery(1); // Crear la galería en la página 1
+            createPagination(totalImages, 1); // Crear la paginación
+        };
     </script>
 </body>
 </html>
