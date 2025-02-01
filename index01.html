@@ -10,9 +10,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 80px 0 0; /* Ajuste para el menú fijo */
-    background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+			padding-top: 80px; /* Ajusta el espacio superior para que el contenido no quede cubierto por el menú fijo */
         }
 
         header {
@@ -233,9 +234,8 @@ footer a:hover {
 		/*nuevo*/
 		#gallery-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
+    gap: 10px;
 }
 
 .gallery-item {
@@ -245,17 +245,10 @@ footer a:hover {
 
 .gallery-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    height: auto;
+    object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
 }
 
-		.gallery-item img:hover {
-    transform: scale(1.05);
-}
-		
 	.pagination {
     display: flex;
     justify-content: center;
@@ -292,25 +285,29 @@ footer a:hover {
         <div class="logo-container">
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo"></a>
-            <p><strong>Farabeuf Foto Home01</strong></p></div>
-          <nav class="menu" id="myMenu" aria-label="Menú principal">
-    <a href="index.html" aria-current="page">Home</a>
-    <div class="dropdown" aria-haspopup="true">
-        <a href="#" aria-expanded="false">Gallery</a>
-        <div class="dropdown-content" aria-label="Submenú de galerías">
-            <a href="urban.html">Urban and Architecture</a>
-            <a href="events.html">Events</a>
-            <a href="landscapes.html">Landscapes</a>
-            <a href="nature.html">Nature</a>
-            <a href="streetfoto.html">Street Photography</a>
-            <a href="street-art.html">Street Art</a>
-            <a href="misc.html">Misc</a>
+            <p><strong>Farabeuf Foto Home001</strong></p></div>
+              <nav class="menu" id="myMenu" aria-label="Menú principal">
+        <a href="index.html" aria-current="page">Home</a>
+        <div class="dropdown" aria-haspopup="true">
+            <a href="#" aria-expanded="false">Gallery</a>
+            <div class="dropdown-content" aria-label="Submenú de galerías">
+                <a href="urban.html">Urban and Architecture</a>
+                <a href="events.html">Events</a>
+                <a href="landscapes.html">Landscapes</a>
+                <a href="nature.html">Nature</a>
+                <a href="streetfoto.html">Street Photography</a>
+                <a href="street-art.html">Street Art</a>
+                <a href="misc.html">Misc</a>
+            </div>
         </div>
-    </div>
-    <a href="about.html">About Me</a>
-    <a href="https://www.instagram.com/alfonsbach_" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="javascript:void(0);" class="icon" onclick="toggleMenu()" aria-label="Abrir menú">☰</a>
-</nav>
+        <a href="about.html">About Me</a>
+        <a href="https://www.instagram.com/alfonsbach_" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </nav>
     </header>
 <div class="content">
     <div id="gallery-container" class="gallery"></div>
@@ -330,14 +327,6 @@ function toggleMenu() {
         x.className = "menu";
     }
 }
-		// Cerrar el menú al seleccionar una opción
-document.querySelectorAll('.menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth <= 1024) {
-            document.getElementById("myMenu").className = "menu";
-        }
-    });
-});
 
 function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
@@ -349,7 +338,7 @@ function createGallery(page = 1) {
     galleryContainer.innerHTML = '';
 
     for (let i = startIndex; i <= endIndex; i++) {
-        const paddedNumber = i.toString().padStart(2, '0');
+        const paddedNumber = i.toString().padStart(2, '0');//cuantos digitos tiene el nombre del archivo 2 o 3
         const imagePath = `${basePath}img_chidas_${paddedNumber}.jpg`;
 
         const galleryItem = document.createElement('div');
@@ -358,12 +347,11 @@ function createGallery(page = 1) {
         const img = document.createElement('img');
         img.src = imagePath;
         img.alt = `Imagen ${i}`;
-        img.loading = 'lazy'; // Lazy loading
-        img.onerror = function() {
-            this.style.display = 'none';
-            this.parentElement.style.display = 'none'; // Oculta el contenedor si la imagen no se carga
-        };
+        img.onerror = function() { this.style.display = 'none'; };
         img.onclick = function() { openPopup(this.src); };
+				img.style.objectFit = 'cover'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.width = '100%'; // Cambio para ver las imagenes del mismo tamaño
+        img.style.height = '100%';// Cambio para ver las imagenes del mismo tamaño
 
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
@@ -477,12 +465,6 @@ window.onload = function() {
     createPagination(totalImages, 1);
 };
 
-		
-		document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') changeImage(-1);
-    if (e.key === 'ArrowRight') changeImage(1);
-    if (e.key === 'Escape') closePopup();
-});
 // Evitar que el clic en la imagen cierre el popup
 document.getElementById('popupImg').onclick = function(event) {
     event.stopPropagation();
