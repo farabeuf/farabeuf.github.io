@@ -115,33 +115,33 @@
             }
         }
 
-        .gallery { /*nuevo formato Grid */
-            display: grid;/*nuevo formato Grid */
-    		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));/*nuevo formato Grid */
-    		gap: 15px;/*nuevo formato Grid */
-    		padding: 20px;/*nuevo formato Grid */
+        /* Estilos de la galería */
+        #gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 20px;
         }
 
         .gallery-item {
-            overflow: hidden;	/*nuevo formato Grid */   
-			border-radius: 8px;	/*nuevo formato Grid */
-    		aspect-ratio: 1 / 1;/*nuevo formato Grid */
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1 / 1;
         }
 
         .gallery-item img {
-            width: 100%;		/*nuevo formato Grid */
-            height: 100%;		/*nuevo formato Grid */
-			object-fit: cover;	/*nuevo formato Grid */
-    		object-position: center;/*nuevo formato Grid */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             cursor: pointer;
-            transition: transform 0.3s ease;/*nuevo formato Grid */
-			margin: 10px; /* Añade márgenes alrededor de cada imagen en la galería */
+            transition: transform 0.3s ease;
         }
 
         .gallery-item img:hover {
             transform: scale(1.05);
         }
 
+        /* Estilos del popup */
         .popup {
             display: none;
             position: fixed;
@@ -201,26 +201,34 @@ footer a:hover {
     margin-top: 10px; /* Asegura que la galería no quede bajo el menú fijo */
 }
 		
-		.pagination {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 20px;
-			padding: 10px 0;/*nuevo*/
-    }
+		/* Estilos de paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
 
-    .pagination a {
-        color: black;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: background-color .3s;
-        border: 1px solid #ddd;
-        margin: 4px;
-    }
+        .pagination a, .pagination span {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
 
-    .pagination a:hover {
-        background-color: #ddd;
-    }
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        .pagination-ellipsis {
+            padding: 8px 16px;
+        }
 
     @media screen and (max-width: 480px) {
         .pagination a {
@@ -231,51 +239,7 @@ footer a:hover {
 
 		
 		
-		/*nuevo*/
-		#gallery-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
-    gap: 10px;
-}
-
-.gallery-item {
-    overflow: hidden;
-    border-radius: 8px; /* Opcional, para un diseño más suave */
-}
-
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Mantiene la proporción de las imágenes y las recorta para llenar el contenedor */
-}
-
-	.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination a, .pagination span {
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-}
-
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
-}
-
-.pagination a:hover:not(.active) {
-    background-color: #ddd;
-}
-
-.pagination-ellipsis {
-    padding: 8px 16px;
-}
+		
 
 		
     </style>
