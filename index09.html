@@ -272,7 +272,7 @@
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo">
             </a>
-            <p><strong>Alfons Bach Foto10</strong></p>
+            <p><strong>Alfons Bach Foto11</strong></p>
         </div>
         <nav class="menu" id="myMenu" aria-label="Menú principal">
     <a href="index.html" aria-current="page">Home</a>
@@ -352,7 +352,7 @@ function getTotalImages() {
 function createGallery(page = 1) {
     const galleryContainer = document.getElementById('gallery-container');
     const basePath = 'img/chidas/';
-    const imagesPerPage = 15;
+    const imagesPerPage = 16;
     const totalImages = getTotalImages(); // Obtener el número total de imágenes
     const startIndex = totalImages - (page - 1) * imagesPerPage; // Calcular el índice inicial en orden inverso
     const endIndex = startIndex - imagesPerPage + 1; // Calcular el índice final en orden inverso
@@ -393,7 +393,7 @@ window.addEventListener('resize', adjustGalleryColumns);
 function createPagination(currentPage = 1) {
     const paginationContainer = document.getElementById('pagination-container');
     const totalImages = getTotalImages(); // Obtener el número total de imágenes
-    const imagesPerPage = 15;
+    const imagesPerPage = 16;
     const totalPages = Math.ceil(totalImages / imagesPerPage); // Calcular el número total de páginas
     const range = 2; // Rango de páginas a mostrar alrededor de la página actual
 
