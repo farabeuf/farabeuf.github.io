@@ -9,95 +9,142 @@
     <meta name="description" content="Farabeuf's photography gallery | Galería de fotografías de Farabeuf | Fotogalerie von Farabeuf. Explore my work in urbanism, landscapes, nature, street photography, and street art | Explora mis trabajos en urbanismo, paisajes, naturaleza, street photography y arte urbano | Entdecken Sie meine Arbeiten in Urbanismus, Landschaften, Natur, Street Photography und Street Art.">
 <meta name="keywords" content="photography, gallery, urbanism, landscapes, nature, street photography, street art, urban photography, architecture, events, urban landscapes, fotografía, galería, urbanismo, paisajes, naturaleza, fotografía callejera, arte urbano, arquitectura, eventos, paisajes urbanos, Fotografie, Galerie, Urbanismus, Landschaften, Natur, Street Photography, Street Art, urbane Fotografie, Architektur, Veranstaltungen, städtische Landschaften">
     <style>
-        /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
-            padding: 80px 0 0; /* Ajuste para el menú fijo */
-            background-color: #f0f0f0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-
-        header {
-            background-color: white;
-            color: #333;
-            padding: 1em;
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .about-section {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-            box-sizing: border-box;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
         }
-
+        .about-image {
+            flex: 1;
+            min-width: 200px;
+            max-width: 100%;
+            padding: 20px;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .about-text {
+            flex: 2;
+            padding: 20px;
+        }
+        .language-selector {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+            }
+            .about-image, .about-text {
+                flex: 1 100%;
+            }
+        }
+        /* Estilos del menú */
+        header {
+    background-color: white;
+    color: #333;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed; /* Fijar el menú en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
+}
         .logo-container {
             display: flex;
             align-items: center;
         }
-
         .logo {
             width: 54px;
             height: 54px;
             margin-right: 10px;
         }
-
-        .menu {
+                .menu {
             display: flex;
-            align-items: center;
-            margin-right: 15px;
+    align-items: center;
+    margin-right: 15px; /* Añadir margen a la derecha del menú */
         }
 
         .menu a, .dropdown > a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-        }
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+		.menu a:last-child {
+    margin-right: 0; /* El último enlace (Instagram) no tendrá margen a la derecha */
+}
+		footer {
+    padding: 20px 0;
+    text-align: center;
+}
 
-        .menu a:last-child {
-            margin-right: 0;
-        }
+footer a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    margin: 5px;
+}
 
+footer a:hover {
+    background-color: #f1f1f1;
+}
+		#gallery-container {
+    margin-top: 80px; /* Asegura que la galería no quede bajo el menú fijo */
+}
+		
         .dropdown {
             position: relative;
         }
-
         .dropdown-content {
             display: none;
             position: absolute;
             background-color: white;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
-
         .dropdown-content a {
             color: #333;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
         }
-
         .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
-
         .dropdown:hover .dropdown-content {
             display: block;
         }
-
         .menu .icon {
             display: none;
         }
-
-        /* Estilos responsivos para el menú */
-        @media screen and (max-width: 1024px) {
-            .menu a:not(:first-child), .dropdown {
-                display: none;
-            }
+        @media screen and (max-width : 1024px ){
+            .menu a:not(:first-child), .dropdown {display: none;}
             .menu a.icon {
                 float: right;
                 display: block;
@@ -118,119 +165,6 @@
             .menu.responsive .dropdown-content {
                 position: relative;
             }
-        }
-
-        /* Estilos de la galería */
-        #gallery-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            aspect-ratio: 1 / 1;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Estilos del popup */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .popup img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-
-        .popup button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 16px;
-            font-size: 18px;
-        }
-
-        #prevBtn {
-            left: 10px;
-        }
-
-        #nextBtn {
-            right: 10px;
-        }
-
-        /* Estilos del footer */
-        footer {
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        footer a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: inline-block;
-            margin: 5px;
-        }
-
-        footer a:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Estilos de paginación */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination a, .pagination span {
-            color: black;
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            margin: 0 4px;
-        }
-
-        .pagination a.active {
-            background-color: #4CAF50;
-            color: white;
-            border: 1px solid #4CAF50;
-        }
-
-        .pagination a:hover:not(.active) {
-            background-color: #ddd;
-        }
-
-        .pagination-ellipsis {
-            padding: 8px 16px;
         }
     </style>
 </head>
