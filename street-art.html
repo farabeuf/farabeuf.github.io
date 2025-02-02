@@ -121,30 +121,62 @@
         }
 
         /* Estilos de la galería */
-        #gallery-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
+#gallery-container {
+    display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    width: 100%;
+	box-sizing: border-box;
+    justify-content: center;
+}
+		/* Ajustar el número de columnas según el tamaño de la pantalla */
+@media screen and (min-width: 1200px) {
+    #gallery-container {
+        grid-template-columns: repeat(5, 1fr); /* 5 columnas en pantallas grandes */
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+    #gallery-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas medianas */
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #gallery-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas pequeñas */
+    }
+}
 
         .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            aspect-ratio: 1 / 1;
-        }
+			width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1; /* Mantener la proporción cuadrada */
+    position: relative;
+    background-color: #f0f0f0; /* Fondo para imágenes que no cargan */
+}
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajustar la imagen al contenedor sin distorsionar */
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Inicialmente invisible para el efecto de carga */
+}
 
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
+.gallery-item img.loaded {
+    opacity: 1; /* Mostrar la imagen cuando esté cargada */
+}
+
+.gallery-item img:hover {
+    transform: scale(1.05); /* Efecto de zoom al hacer hover */
+}@charset "utf-8";
+/* CSS Document */
+
+		
 
         /* Estilos del popup */
         .popup {
@@ -240,7 +272,7 @@
             <a href="index.html">
                 <img src="img/web/display2.jpg" alt="Logo" class="logo">
             </a>
-            <p><strong>Alfons Bach Street Art</strong></p>
+            <p><strong>Alfons Bach Misc</strong></p>
         </div>
         <nav class="menu" id="myMenu" aria-label="Menú principal">
     <a href="index.html" aria-current="page">Home</a>
@@ -291,7 +323,20 @@
                 x.className = "menu";
             }
         }
+// Función para ajustar dinámicamente el número de columnas en la galería
+function adjustGalleryColumns() {
+    const galleryContainer = document.getElementById('gallery-container');
+    const screenWidth = window.innerWidth;
 
+    if (screenWidth >= 1200) {
+        galleryContainer.style.gridTemplateColumns = 'repeat(5, 1fr)'; // 5 columnas en pantallas grandes
+    } else if (screenWidth >= 768) {
+        galleryContainer.style.gridTemplateColumns = 'repeat(3, 1fr)'; // 3 columnas en pantallas medianas
+    } else {
+        galleryContainer.style.gridTemplateColumns = 'repeat(1, 1fr)'; // 2 columnas en pantallas pequeñas
+    }
+}
+		
         // Variables globales para el popup
 let currentIndex = 0;
 let images = [];
@@ -337,8 +382,13 @@ function createGallery(page = 1) {
         galleryItem.appendChild(img);
         galleryContainer.appendChild(galleryItem);
     }
+	// Ajustar las columnas después de crear la galería
+    adjustGalleryColumns();
 }
-
+		
+		// Ajustar las columnas al cambiar el tamaño de la ventana
+window.addEventListener('resize', adjustGalleryColumns);
+		
 // Función para crear la paginación
 function createPagination(currentPage = 1) {
     const paginationContainer = document.getElementById('pagination-container');
