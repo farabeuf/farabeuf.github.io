@@ -1,0 +1,36 @@
+1. copiar fotos a chidas
+2. Abrir la carpeta chidas en la Terminal
+3. Ejecutar en terminal el archivo renombrar chidas
+
+4. Ejecutar el renumerar_chidas.sh para ajustar los huecos en las fotos y la numeración está perfecta
+
+farabeuf@farabeuf-ThinkPad-T530:/media/farabeuf/FbF-2T/GoogleDrive/GitHub/farabeuf.github.io/img/chidas$ ./renumerar_chidas.sh
+
+
+así:
+
+farabeuf@farabeuf-ThinkPad-T530:/media/farabeuf/FbF-2T/GoogleDrive/GitHub/farabeuf.github.io/img/chidas$ ./renombrar_chidas_final.sh
+Último número detectado: 0
+
+Vista previa (qué renombrados se harán):
+25775_104254199615046_100000913998560_34578_553358_n.jpg -> img_chidas_01.jpg
+25775_104254206281712_100000913998560_34580_7481798_n.jpg -> img_chidas_02.jpg
+25775_104254222948377_100000913998560_34585_6787823_n.jpg -> img_chidas_03.jpg
+25775_104254232948376_100000913998560_34588_4569264_n.jpg -> img_chidas_04.jpg
+25775_104254236281709_100000913998560_34589_3563876_n.jpg -> img_chidas_05.jpg
+
+¿Aplicar estos renombrados? (s/N) s
+Renombrado: 25775_104254199615046_100000913998560_34578_553358_n.jpg -> img_chidas_01.jpg
+Renombrado: 25775_104254206281712_100000913998560_34580_7481798_n.jpg -> img_chidas_02.jpg
+Renombrado: 25775_104254222948377_100000913998560_34585_6787823_n.jpg -> img_chidas_03.jpg
+Renombrado: 25775_104254232948376_100000913998560_34588_4569264_n.jpg -> img_chidas_04.jpg
+Renombrado: 25775_104254236281709_100000913998560_34589_3563876_n.jpg -> img_chidas_05.jpg
+✔ Renombrado completado.
+farabeuf@farabeuf-ThinkPad-T530:/media/farabeuf/FbF-2T/GoogleDrive/GitHub/farabeuf.github.io/img/chidas$ 
+
+
+
+
+
+
+
